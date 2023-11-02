@@ -1,0 +1,2 @@
+D:\c++\dynamic programming\zero_one_bags\x64\Debug\zero_one_bags.exe
+D:\c++code\dynamic programming\zero_one_bags\x64\Debug\zero_one_bags.exe

@@ -1,0 +1,14 @@
+{
+  "server_ip": "127.0.0.1",
+  "server_port": 5500,
+
+  "max_connections": 2,
+  "max_buf_size":  200,
+
+  "log_dictionary_path": "log",
+  "max_generate_interval": 1,
+  "max_log_amount": 30,
+
+  "script_file_path": "data/script.txt",
+  "userdata_file_path": "data/userdata.json"
+}

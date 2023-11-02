@@ -1,0 +1,45 @@
+
+22-11-30-00:36:19 [note]Begin parse script file "script.txt"
+22-11-30-00:36:19 [note]Script parse succeeded
+22-11-30-00:36:19 [note]Create semaphore succeeded, initial value: 2
+22-11-30-00:36:19 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-11-30-00:36:19 [note]Socket init succeeded
+22-11-30-00:36:49 [note]Accept client 127.0.0.1
+22-11-30-00:36:49 [note](127.0.0.1) begin process
+22-11-30-00:39:04 [error]SocketDisconnectException: client 127.0.0.1 disconnect
+22-11-30-00:39:04 [note]Disconnect client 127.0.0.1
+22-11-30-00:39:13 [note]Accept client 127.0.0.1
+22-11-30-00:39:13 [note](127.0.0.1) begin process
+22-11-30-00:40:35 [error]SocketErrorException: socket error: 10054
+22-11-30-00:40:35 [note]Disconnect client 127.0.0.1
+22-11-30-00:40:45 [note]Accept client 127.0.0.1
+22-11-30-00:40:45 [note](127.0.0.1) begin process
+22-11-30-00:40:49 [error]SocketErrorException: socket error: 10054
+22-11-30-00:40:49 [note]Disconnect client 127.0.0.1
+
+22-11-30-11:30:42 [note]Begin parse script file "script.txt"
+22-11-30-11:30:42 [error]ScriptFileException: No such file "script.txt"
+
+22-11-30-11:31:44 [note]Begin parse script file "data/script.txt"
+22-11-30-11:31:44 [note]Script parse succeeded
+22-11-30-11:31:44 [note]Create semaphore succeeded, initial value: 2
+22-11-30-11:31:44 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-11-30-11:31:44 [note]Socket init succeeded
+22-11-30-11:34:55 [note]Accept client 127.0.0.1
+22-11-30-11:34:55 [note](127.0.0.1) begin process
+22-11-30-11:35:53 [error]SocketDisconnectException: client 127.0.0.1 disconnect
+22-11-30-11:35:53 [note]Disconnect client 127.0.0.1
+
+22-11-30-23:56:28 [note]Begin parse script file "data/script.txt"
+22-11-30-23:56:28 [note]Script parse succeeded
+22-11-30-23:56:28 [note]Create semaphore succeeded, initial value: 2
+22-11-30-23:56:28 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-11-30-23:56:28 [note]Socket init succeeded
+22-11-30-23:56:55 [note]Accept client 127.0.0.1
+22-11-30-23:56:55 [note](127.0.0.1) begin process
+22-11-30-23:58:29 [note](127.0.0.1) finish process
+22-11-30-23:58:29 [note]Disconnect client 127.0.0.1
+22-11-30-23:58:39 [note]Accept client 127.0.0.1
+22-11-30-23:58:39 [note](127.0.0.1) begin process
+22-12-01-00:00:21 [note](127.0.0.1) finish process
+22-12-01-00:00:21 [note]Disconnect client 127.0.0.1

@@ -1,0 +1,56 @@
+
+22-11-29-21:43:55 [note]Begin parse script file "script.txt"
+22-11-29-21:43:55 [note]Script parse succeeded
+22-11-29-21:43:55 [note]Create semaphore succeeded, initial value: 2
+22-11-29-21:43:55 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-11-29-21:43:55 [note]Socket init succeeded
+22-11-29-21:45:57 [note]Accept client 127.0.0.1
+22-11-29-21:45:57 [note](127.0.0.1) begin process
+22-11-29-21:46:44 [error]SocketErrorException: socket error: 10054
+22-11-29-21:46:44 [note]Disconnect client 127.0.0.1
+22-11-29-21:47:02 [note]Accept client 127.0.0.1
+22-11-29-21:47:02 [note](127.0.0.1) begin process
+22-11-29-21:47:45 [error]SocketErrorException: socket error: 10054
+22-11-29-21:47:45 [note]Disconnect client 127.0.0.1
+22-11-29-21:47:54 [note]Accept client 127.0.0.1
+22-11-29-21:47:54 [note](127.0.0.1) begin process
+22-11-29-21:48:06 [error]SocketErrorException: socket error: 10054
+22-11-29-21:48:06 [note]Disconnect client 127.0.0.1
+22-11-29-21:48:35 [note]Accept client 127.0.0.1
+22-11-29-21:48:35 [note](127.0.0.1) begin process
+22-11-29-21:49:02 [error]SocketErrorException: socket error: 10054
+22-11-29-21:49:02 [note]Disconnect client 127.0.0.1
+
+22-11-29-21:49:45 [note]Begin parse script file "script.txt"
+22-11-29-21:49:45 [note]Script parse succeeded
+22-11-29-21:49:45 [note]Create semaphore succeeded, initial value: 2
+22-11-29-21:49:45 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-11-29-21:49:45 [note]Socket init succeeded
+22-11-29-21:49:54 [note]Accept client 127.0.0.1
+22-11-29-21:49:54 [note](127.0.0.1) begin process
+22-11-29-21:50:05 [error]SocketErrorException: socket error: 10054
+22-11-29-21:50:05 [note]Disconnect client 127.0.0.1
+22-11-29-21:50:13 [note]Accept client 127.0.0.1
+22-11-29-21:50:13 [note](127.0.0.1) begin process
+22-11-29-21:50:52 [error]SocketErrorException: socket error: 10054
+22-11-29-21:50:52 [note]Disconnect client 127.0.0.1
+22-11-29-21:52:47 [note]Accept client 127.0.0.1
+22-11-29-21:52:47 [note](127.0.0.1) begin process
+22-11-29-21:54:12 [note](127.0.0.1) finish process
+22-11-29-21:54:12 [note]Disconnect client 127.0.0.1
+22-11-29-23:03:13 [note]Accept client 127.0.0.1
+22-11-29-23:03:13 [note](127.0.0.1) begin process
+22-11-29-23:04:02 [note](127.0.0.1) finish process
+22-11-29-23:04:02 [note]Disconnect client 127.0.0.1
+
+22-11-29-23:12:52 [note]Begin parse script file "script.txt"
+22-11-29-23:12:52 [note]Script parse succeeded
+22-11-29-23:12:52 [note]Create semaphore succeeded, initial value: 2
+22-11-29-23:12:52 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-11-29-23:12:52 [note]Socket init succeeded
+
+22-11-29-23:13:10 [note]Begin parse script file "script.txt"
+22-11-29-23:13:10 [note]Script parse succeeded
+22-11-29-23:13:10 [note]Create semaphore succeeded, initial value: 2
+22-11-29-23:13:10 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-11-29-23:13:10 [note]Socket init succeeded

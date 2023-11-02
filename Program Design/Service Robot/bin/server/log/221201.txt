@@ -1,0 +1,93 @@
+
+22-12-01-00:00:40 [note]Begin parse script file "data/script.txt"
+22-12-01-00:00:40 [note]Script parse succeeded
+22-12-01-00:00:40 [note]Create semaphore succeeded, initial value: 2
+22-12-01-00:00:40 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-00:00:40 [note]Socket init succeeded
+
+22-12-01-20:32:15 [note]Begin parse script file "data/script.txt"
+22-12-01-20:32:15 [note]Script parse succeeded
+22-12-01-20:32:15 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:32:15 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:32:15 [note]Socket init succeeded
+22-12-01-20:32:37 [note]Accept client 127.0.0.1
+22-12-01-20:32:37 [note](127.0.0.1) begin process
+
+22-12-01-20:35:58 [note]Begin parse script file "data/script.txt"
+22-12-01-20:35:58 [note]Script parse succeeded
+22-12-01-20:35:58 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:35:58 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:35:58 [note]Socket init succeeded
+22-12-01-20:36:09 [note]Accept client 127.0.0.1
+22-12-01-20:36:09 [note](127.0.0.1) begin process
+
+22-12-01-20:36:35 [note]Begin parse script file "data/script.txt"
+22-12-01-20:36:35 [note]Script parse succeeded
+22-12-01-20:36:35 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:36:35 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:36:35 [note]Socket init succeeded
+
+22-12-01-20:36:55 [note]Begin parse script file "data/script.txt"
+22-12-01-20:36:55 [note]Script parse succeeded
+22-12-01-20:36:55 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:36:55 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:36:55 [note]Socket init succeeded
+22-12-01-20:37:03 [note]Accept client 127.0.0.1
+22-12-01-20:37:03 [note](127.0.0.1) begin process
+
+22-12-01-20:39:18 [note]Begin parse script file "data/script.txt"
+22-12-01-20:39:18 [note]Script parse succeeded
+22-12-01-20:39:18 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:39:18 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:39:18 [note]Socket init succeeded
+
+22-12-01-20:39:35 [note]Begin parse script file "data/script.txt"
+22-12-01-20:39:35 [note]Script parse succeeded
+22-12-01-20:39:35 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:39:35 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:39:35 [note]Socket init succeeded
+
+22-12-01-20:40:44 [note]Begin parse script file "data/script.txt"
+22-12-01-20:40:44 [note]Script parse succeeded
+22-12-01-20:40:44 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:40:44 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:40:44 [note]Socket init succeeded
+
+22-12-01-20:41:33 [note]Begin parse script file "data/script.txt"
+22-12-01-20:41:33 [note]Script parse succeeded
+22-12-01-20:41:33 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:41:33 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:41:33 [note]Socket init succeeded
+22-12-01-20:41:53 [note]Accept client 127.0.0.1
+22-12-01-20:41:53 [note](127.0.0.1) begin process
+22-12-01-20:42:27 [note](127.0.0.1) finish process
+22-12-01-20:42:27 [note]Disconnect client 127.0.0.1
+22-12-01-20:42:38 [note]Accept client 127.0.0.1
+22-12-01-20:42:38 [note](127.0.0.1) begin process
+22-12-01-20:45:28 [note](127.0.0.1) finish process
+22-12-01-20:45:28 [note]Disconnect client 127.0.0.1
+22-12-01-20:46:45 [note]Accept client 127.0.0.1
+22-12-01-20:46:45 [note](127.0.0.1) begin process
+
+
+22-12-01-20:48:36 [note]Begin parse script file "data/script.txt"
+22-12-01-20:48:36 [note]Script parse succeeded
+22-12-01-20:48:36 [note]Create semaphore succeeded, initial value: 2
+22-12-01-20:48:36 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-20:48:36 [note]Socket init succeeded
+22-12-01-20:48:43 [note]Accept client 127.0.0.1
+22-12-01-20:48:43 [note](127.0.0.1) begin process
+
+22-12-01-21:19:54 [note]Begin parse script file "data/script.txt"
+22-12-01-21:19:54 [note]Script parse succeeded
+22-12-01-21:19:54 [note]Create semaphore succeeded, initial value: 2
+22-12-01-21:19:54 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-21:19:54 [note]Socket init succeeded
+22-12-01-21:20:03 [note]Accept client 127.0.0.1
+22-12-01-21:20:03 [note](127.0.0.1) begin process
+
+22-12-01-23:59:48 [note]Begin parse script file "data/script.txt"
+22-12-01-23:59:48 [note]Script parse succeeded
+22-12-01-23:59:48 [note]Create semaphore succeeded, initial value: 2
+22-12-01-23:59:48 [note]Begin init socket, IP: 127.0.0.1 port: 5500
+22-12-01-23:59:48 [note]Socket init succeeded

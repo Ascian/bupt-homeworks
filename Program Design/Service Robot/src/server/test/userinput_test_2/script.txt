@@ -1,0 +1,55 @@
+    Step welcome 
+     Speak "Hi，您好，小蜜在此等主人很久了，有什么烦恼快和小蜜说吧！"
+     Listen 5, 20
+     Branch "订单", orderProc
+     Branch "物流", logisticsProc
+     Branch "账户", accountProc
+     Branch "支付", payProc
+     Branch "再见", exitProc
+     Silence silenceProc  
+     Default defaultProc
+    Step ask
+     Speak "请问还有什么要问小蜜的吗?"
+     Listen 5, 20
+     Branch "订单", orderProc
+     Branch "物流", logisticsProc
+     Branch "账户", accountProc
+     Branch "支付", payProc
+     Branch "再见", exitProc
+     Silence silenceProc  
+     Default defaultProc
+    Step orderProc
+     Speak "您目前有" + $order + "个订单"
+     Silence ask
+    Step logisticsProc
+     Speak "您目前有" + $logistcs + "个订单"
+     Silence ask
+    Step payProc
+     Speak "如果您有任何订单问题，可以联系淘宝客服，电话：" + $phone  
+     Silence ask
+    Step accountProc
+     Speak "如果您有任何支付问题，可以联系支付宝客服，QQ：" + $qq 
+     Silence ask
+    Step exitProc
+     Speak "主人再见！" 
+     Exit
+    Step silenceProc
+     Speak "小蜜没听清您在说什么，您可以问一些关于订单、物流、账户、支付等问题，或者说声再见"
+     Listen 5, 20
+     Branch "订单", orderProc
+     Branch "物流", logisticsProc
+     Branch "账户", accountProc
+     Branch "支付", payProc
+     Branch "再见", exitProc
+     Silence silenceProc  
+     Default defaultProc
+    Step defaultProc
+     Speak "小蜜不知道您在说什么，您可以问一些关于订单、物流、账户、支付等问题，或者说声再见"
+     Listen 5, 20
+     Branch "订单", orderProc
+     Branch "物流", logisticsProc
+     Branch "账户", accountProc
+     Branch "支付", payProc
+     Branch "再见", exitProc
+     Silence silenceProc  
+     Default defaultProc

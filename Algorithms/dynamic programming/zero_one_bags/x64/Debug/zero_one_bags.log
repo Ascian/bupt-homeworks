@@ -1,0 +1,12 @@
+﻿  improved_knapsack.cpp
+D:\c++code\dynamic programming\zero_one_bags\improved_knapsack.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  zero_one_bags.cpp
+D:\c++code\dynamic programming\zero_one_bags\improved_knapsack.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\c++code\dynamic programming\zero_one_bags\improved_knapsack.cpp(26,11): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+D:\c++code\dynamic programming\zero_one_bags\zero_one_bags.cpp(28): message : 查看对正在编译的函数 模板 实例化“Type Knapsack<int>(int,Type,Type *,Type *,int *,bool)”的引用
+          with
+          [
+              Type=int
+          ]
+  正在生成代码...
+  zero_one_bags.vcxproj -> D:\c++code\dynamic programming\zero_one_bags\x64\Debug\zero_one_bags.exe

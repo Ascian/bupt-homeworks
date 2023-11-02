@@ -1,0 +1,42 @@
+struct st
+{
+    int a;
+};
+
+int main()
+{
+    char c = '\n';
+    int i = 12;
+    //这是一条单行注释
+    unsigned int ui = 017u;
+    long l = 0x12al;
+    unsigned long ul = 14ul;
+    float f = 1.;
+    struct st s1;
+    struct st* s2 = &s1;
+    s2->a = 15;
+    /*
+    这是
+    一条
+    多行
+    注释
+    */
+    double d = .12E+10l;
+    if (c <= '\xff')
+    {
+        c = '\x100';
+    }
+    else if (!i || l == 12)
+    {
+        i += 09;
+        ui += 0xr;
+        f = 1.2Ea;
+        d = 1.3E+a;
+    }
+
+    i++;
+    ui << 1;
+    f = (i == 1) ? 1.0 : 0;
+    printf("This is a string");
+    return 0;
+}

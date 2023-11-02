@@ -1,0 +1,13 @@
+﻿  quick_sort_test.cpp
+D:\c++code\sort\quick_sort\threeway_quick_sort.cpp(48,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+D:\c++code\sort\quick_sort\threeway_quick_sort.cpp(56): message : 查看对正在编译的函数 模板 实例化“range RandomizedPartition<Type>(Type [],const int &,const int &)”的引用
+          with
+          [
+              Type=int
+          ]
+D:\c++code\sort\quick_sort\quick_sort_test.cpp(20): message : 查看对正在编译的函数 模板 实例化“void QuickSort<int>(Type [],const int &,const int &)”的引用
+          with
+          [
+              Type=int
+          ]
+  quick_sort.vcxproj -> D:\c++code\sort\quick_sort\x64\Debug\quick_sort.exe

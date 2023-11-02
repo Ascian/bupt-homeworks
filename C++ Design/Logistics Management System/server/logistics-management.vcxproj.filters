@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\account">
+      <UniqueIdentifier>{8e1c499f-ad27-4a6a-9734-7336c6850570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\account">
+      <UniqueIdentifier>{06699c3b-acce-47ab-ba80-345f5c0d98d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\express">
+      <UniqueIdentifier>{8cfcec56-8fed-40f1-a4ec-788187334d61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\express">
+      <UniqueIdentifier>{072fdd08-ede7-406c-8992-9092419f0aa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\logistics">
+      <UniqueIdentifier>{b2514f91-27c7-4240-94f0-c4ff0e115906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\logistics">
+      <UniqueIdentifier>{62d807fc-e209-4351-b425-ee06feaef0f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\console">
+      <UniqueIdentifier>{3ccfc43f-432b-4586-8075-8a274df92b7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\concole">
+      <UniqueIdentifier>{0b7ea266-8ad6-4283-a2fb-633faa237bac}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LogisticsManagementServer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Account.cpp">
+      <Filter>源文件\account</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>源文件\account</Filter>
+    </ClCompile>
+    <ClCompile Include="Express.cpp">
+      <Filter>源文件\express</Filter>
+    </ClCompile>
+    <ClCompile Include="Logistics.cpp">
+      <Filter>源文件\logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager.cpp">
+      <Filter>源文件\account</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleModule.cpp">
+      <Filter>源文件\concole</Filter>
+    </ClCompile>
+    <ClCompile Include="MainModule.cpp">
+      <Filter>源文件\concole</Filter>
+    </ClCompile>
+    <ClCompile Include="UserModule.cpp">
+      <Filter>源文件\concole</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerModule.cpp">
+      <Filter>源文件\concole</Filter>
+    </ClCompile>
+    <ClCompile Include="Courier.cpp">
+      <Filter>源文件\account</Filter>
+    </ClCompile>
+    <ClCompile Include="Fragile.cpp">
+      <Filter>源文件\express</Filter>
+    </ClCompile>
+    <ClCompile Include="Book.cpp">
+      <Filter>源文件\express</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalExpress.cpp">
+      <Filter>源文件\express</Filter>
+    </ClCompile>
+    <ClCompile Include="CourierModule.cpp">
+      <Filter>源文件\concole</Filter>
+    </ClCompile>
+    <ClCompile Include="ReceiverModule.cpp">
+      <Filter>源文件\concole</Filter>
+    </ClCompile>
+    <ClCompile Include="SenderModule.cpp">
+      <Filter>源文件\concole</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Account.h">
+      <Filter>头文件\account</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>头文件\account</Filter>
+    </ClInclude>
+    <ClInclude Include="Express.h">
+      <Filter>头文件\express</Filter>
+    </ClInclude>
+    <ClInclude Include="Logistics.h">
+      <Filter>头文件\logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.h">
+      <Filter>头文件\account</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleModule.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="MainModule.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="UserModule.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerModule.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="Courier.h">
+      <Filter>头文件\account</Filter>
+    </ClInclude>
+    <ClInclude Include="Fragile.h">
+      <Filter>头文件\express</Filter>
+    </ClInclude>
+    <ClInclude Include="Book.h">
+      <Filter>头文件\express</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalExpress.h">
+      <Filter>头文件\express</Filter>
+    </ClInclude>
+    <ClInclude Include="CourierModule.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="ReceiverModule.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="SenderModule.h">
+      <Filter>头文件\console</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

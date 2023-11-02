@@ -1,0 +1,1 @@
+(line 15, pos 1) unknown token "*"

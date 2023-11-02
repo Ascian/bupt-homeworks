@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\exception">
+      <UniqueIdentifier>{62118dad-6e9b-40c7-bf5f-afd8366ced81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\script_interpreter">
+      <UniqueIdentifier>{fded6311-d9de-4412-9171-17fc98567419}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\logger">
+      <UniqueIdentifier>{430a5cc0-971a-426e-b709-da70b0983c08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\client_processor">
+      <UniqueIdentifier>{12a86865-bc6d-4a87-99b5-0137d92630e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\client_processor">
+      <UniqueIdentifier>{218c8b2e-e2e9-431c-b3b0-3d3b9cbe1160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\logger">
+      <UniqueIdentifier>{b87c3226-77db-4b73-a4de-493cd2917321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\script_interpreter">
+      <UniqueIdentifier>{12c20457-c6d1-480d-84f8-1eb7e2ca37bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="base\client_processor\client_processor.cpp">
+      <Filter>源文件\client_processor</Filter>
+    </ClCompile>
+    <ClCompile Include="base\logger\logger.cpp">
+      <Filter>源文件\logger</Filter>
+    </ClCompile>
+    <ClCompile Include="base\script_interpreter\interpreter.cpp">
+      <Filter>源文件\script_interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="base\script_interpreter\step.cpp">
+      <Filter>源文件\script_interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="base\script_interpreter\syntax_tree.cpp">
+      <Filter>源文件\script_interpreter</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base\script_interpreter\interpreter.h">
+      <Filter>头文件\script_interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="base\script_interpreter\step.h">
+      <Filter>头文件\script_interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="base\client_processor\client_processor.h">
+      <Filter>头文件\client_processor</Filter>
+    </ClInclude>
+    <ClInclude Include="base\exception\script_exception.h">
+      <Filter>头文件\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="base\exception\socket_exception.h">
+      <Filter>头文件\exception</Filter>
+    </ClInclude>
+    <ClInclude Include="base\script_interpreter\syntax_tree.h">
+      <Filter>头文件\script_interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="base\logger\logger.h">
+      <Filter>头文件\logger</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

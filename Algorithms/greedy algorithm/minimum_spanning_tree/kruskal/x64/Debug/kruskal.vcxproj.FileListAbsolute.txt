@@ -1,0 +1,1 @@
+D:\c++code\greedy_algorithm\minimum_spanning_tree\kruskal\x64\Debug\kruskal.exe

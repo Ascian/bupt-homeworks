@@ -1,0 +1,1 @@
+D:\c++code\greedy_algorithm\dijkstra\dijkstra\x64\Debug\dijkstra.exe
