@@ -1,0 +1,13 @@
+﻿  用于 x86 的 Microsoft (R) C/C++ 优化编译器 19.31.31107 版
+  版权所有(C) Microsoft Corporation。保留所有权利。
+  cl /c /ZI /JMC /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D _MBCS /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /FAs /Fa"Win32-Debug\\" /Fo"Win32-Debug\\" /Fd"Win32-Debug\vc143.pdb" /external:W3 /Gd /TC /analyze- /FC /errorReport:prompt /utf-8 crc32.c getopt.c lprintf.c protocol.c
+  crc32.c
+  getopt.c
+  lprintf.c
+  protocol.c
+  正在生成代码...
+  用于 x86 的 Microsoft (R) C/C++ 优化编译器 19.31.31107 版
+  版权所有(C) Microsoft Corporation。保留所有权利。
+  cl /c /ZI /JMC /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D _MBCS /D _UNICODE /D UNICODE /D _CRT_SECURE_NO_WARNINGS /GF /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /FAs /Fa"Win32-Debug\\" /Fo"Win32-Debug\\" /Fd"Win32-Debug\vc143.pdb" /external:W3 /Gd /TC /analyze- /FC /errorReport:prompt datalink.c
+  datalink.c
+  datalink.vcxproj -> D:\Documents\桌面\计算机网络实验\Lab1-2022(Win+Linux)\selective\Win32-Debug\datalink.exe
