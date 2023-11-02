@@ -1,0 +1,5 @@
+beijing_rent = []
+shanghai_rent = []
+guangzhou_rent = []
+shenzhen_rent = []
+quanzhou_rent = []
