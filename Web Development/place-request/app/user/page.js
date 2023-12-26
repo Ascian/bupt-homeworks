@@ -64,13 +64,16 @@ export default function Page() {
             phoneNumber: phoneNumber,
             bio: introduction,
         }))
-        const res = await fetch(`${config.serverIp}/users`, {
-            method: 'POST',
+        const res = await fetch(`${config.serverIp}/users/me`, {
+            method: 'PATCH',
             body: JSON.stringify({
                 phoneNumber: phoneNumber,
                 bio: introduction,
             }),
-            headers: { "Content-Type": "application/json" }
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${session.accessToken}`
+            }
         })
         const user = await res.json()
 

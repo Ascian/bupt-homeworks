@@ -11,49 +11,61 @@ const handler = NextAuth({
                 password: { label: "密码", type: "password", placeholder: "请输入密码" }
             },
             async authorize(credentials, req) {
-                const account = {
-                    username: credentials.username,
-                    password: credentials.password,
-                }
 
                 const res = await fetch(`${config.serverIp}/users/login`, {
                     method: 'POST',
-                    body: JSON.stringify(account),
+                    body: JSON.stringify({
+                        username: credentials.username,
+                        password: credentials.password
+                    }),
                     headers: { "Content-Type": "application/json" }
                 })
                 const user = await res.json()
-                // const user = {
-                //     username: "username",
-                //     realName: "realName",
-                //     identityType: "identityType",
-                //     identityNumber: "identityNumber",
-                //     phoneNumber: "phoneNumber",
-                //     introduction: "introduction",
-                //     city: "city",
-                //     province: "province",
-                //     country: "country",
-                // };
                 // If no error and we have user data, return it
                 if (res.ok && user) {
                     return user
                 }
-                // Return null if user data could not be retrieved
                 return null
-
             }
         })
     ],
     callbacks: {
         async jwt({ token, user, account }) {
             if (account && account.type === "credentials" && user) {
-                token.user = user;
-                token.accessToken = user.access_token;
+                const res = await fetch(`${config.serverIp}/users/me`, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${user.token}`,
+                    },
+                })
+                const userProfile = await res.json()
+                token.accessToken = user.token;
+
+                const identityTypes = {
+                    'IdCard': '居民身份证',
+                    'Passport': '护照',
+                }
+                token.user = {
+                    id: userProfile.id,
+                    username: userProfile.username,
+                    userType: userProfile.userType,
+                    realName: userProfile.realName,
+                    identityType: identityTypes[userProfile.documentType],
+                    identityNumber: userProfile.documentNumber,
+                    phoneNumber: userProfile.phoneNumber,
+                    userLevel: userProfile.userLevel,
+                    introduction: userProfile.bio,
+                    city: userProfile.region,
+                    province: userProfile.district,
+                    country: userProfile.country,
+                }
             }
             return token;
         },
         async session({ session, token }) {
-            session.user = token.user;
             session.accessToken = token.accessToken;
+            session.user = token.user;
             return session;
         },
     }

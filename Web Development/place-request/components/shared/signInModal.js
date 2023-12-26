@@ -57,7 +57,7 @@ export function SignInModal({
         if (result?.error) {
             toast({
                 title: "登录失败",
-                description: result.error,
+                description: '用户名或密码错误',
                 status: "error",
                 duration: 9000,
                 isClosable: true,
