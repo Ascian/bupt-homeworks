@@ -106,13 +106,16 @@ export default function Page() {
             originPassword: originPassword,
             password: password,
         }))
-        const res = await fetch(`${config.serverIp}/users`, {
-            method: 'POST',
+        const res = await fetch(`${config.serverIp}/users/me`, {
+            method: 'PATCH',
             body: JSON.stringify({
-                originPassword: originPassword,
+                riginPassword: originPassword,
                 password: password,
             }),
-            headers: { "Content-Type": "application/json" }
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${session.accessToken}`
+            }
         })
         const user = await res.json()
 
