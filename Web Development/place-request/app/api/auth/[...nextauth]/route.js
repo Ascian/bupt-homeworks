@@ -30,7 +30,13 @@ const handler = NextAuth({
         })
     ],
     callbacks: {
-        async jwt({ token, user, account }) {
+        async jwt({ token, user, account, trigger, session }) {
+            // update() 
+            if (trigger === "update") {
+                token.user = session.user
+                return token
+            }
+        // Initial sign in
             if (account && account.type === "credentials" && user) {
                 const res = await fetch(`${config.serverIp}/users/me`, {
                     method: 'GET',

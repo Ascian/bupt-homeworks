@@ -20,7 +20,10 @@ export default function Nav() {
                     z-30 transition-all`}
             >
                 <div className="mx-5 flex h-16 max-w-screen-xl items-center justify-between w-full">
-                    <Link href="/" className="flex items-center font-display text-2xl">
+                    <Link href="/" className="flex items-center font-display text-2xl"
+                        style={{
+                            textDecoration: 'none'
+                        }}>
                         <p>好去处</p>
                     </Link>
                     {session ? (

@@ -26,7 +26,7 @@ import config from '@/app/config'
 
 export default function Page() {
     const [show, setShow] = useState(false);
-    const { data: session } = useSession();
+    const { data: session, update } = useSession();
 
     const [phoneNumber, setPhoneNumber] = useState('');
     const [introduction, setIntroduction] = useState('');
@@ -79,6 +79,14 @@ export default function Page() {
 
         // If no error and we have user data, return it
         if (res.ok && user) {
+            await update({
+                ...session,
+                user: {
+                    ...session.user,
+                    phoneNumber: user.phoneNumber,
+                    introduction: user.bio,
+                }
+            })
             toast({
                 title: '修改成功',
                 status: 'success',

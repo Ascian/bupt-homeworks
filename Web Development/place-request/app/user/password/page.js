@@ -102,10 +102,6 @@ export default function Page() {
             return;
         }
 
-        console.log(JSON.stringify({
-            originPassword: originPassword,
-            password: password,
-        }))
         const res = await fetch(`${config.serverIp}/users/me`, {
             method: 'PATCH',
             body: JSON.stringify({
@@ -180,7 +176,7 @@ export default function Page() {
                             <GridItem rowSpan={1} colSpan={1} p='4'>
                                 <Text>确认密码</Text>
                                 <Input
-                                    value={password}
+                                    value={confirmPassword}
                                     type={show ? 'text' : 'password'}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     errorBorderColor='crimson'
