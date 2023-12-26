@@ -51,8 +51,8 @@ export function SignInModal({
 
         const result = await signIn('credentials', {
             redirect: false,
-            username,
-            password,
+            username: username,
+            password: password,
         });
         if (result?.error) {
             toast({

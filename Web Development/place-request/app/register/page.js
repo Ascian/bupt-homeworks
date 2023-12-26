@@ -217,7 +217,7 @@ export default function Page() {
                 username: username,
                 password: password,
                 realName: realName,
-                documentType: identityType,
+                documentType: identityTypes[identityType],
                 documentNumber: identityNumber,
                 phoneNumber: phoneNumber,
                 bio: introduction,
@@ -235,10 +235,12 @@ export default function Page() {
                 title: '注册成功',
                 description: "即将跳转至主界面",
                 status: 'success',
-                duration: 9000,
+                duration: 2000,
                 isClosable: true,
             })
-            window.location.href = '/';
+            const timer = setTimeout(() => {
+                window.location.href = '/';
+            }, 2000)  
             return;
         }
         // Return null if user data could not be retrieved
