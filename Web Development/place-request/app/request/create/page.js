@@ -23,6 +23,105 @@ export default function Page() {
     const [isMaxExpectedPriceInvalid, setIsMaxExpectedPriceInvalid] = useState(false);
     const [isSeekerExpiryDateInvalid, setIsSeekerExpiryDateInvalid] = useState(false);
 
+    const toast = useToast()
+    const handleSubmit = async () => {
+        if (title === '' || title.length > 20) {
+            toast({
+                title: '标题不合法',
+                description: "标题不能为空且长度不能超过20",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            setIsTitleInvalid(true);
+            return;
+        }
+        if (description === '' || description.length > 10000) {
+            toast({
+                title: '描述不合法',
+                description: "描述不能为空且长度不能超过10000",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            setIsDescriptionInvalid(true);
+            return;
+        }
+        if (destinationType === '' || destinationType.length > 20) {
+            toast({
+                title: '目的地类型不合法',
+                description: "目的地类型不能为空且长度不能超过20",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            setIsDestinationTypeInvalid(true);
+            return;
+        }
+        if (maxExpectedPrice < 0 || maxExpectedPrice > 1000000) {
+            toast({
+                title: '最大期望价格不合法',
+                description: "最大期望价格必须在0到1000000之间",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            setIsMaxExpectedPriceInvalid(true);
+            return;
+        }
+        if (seekerExpiryDate === '') {
+            toast({
+                title: '求购截止日期不合法',
+                description: "求购截止日期不能为空",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            setIsSeekerExpiryDateInvalid(true);
+            return;
+        }
+
+        const res = await fetch(`${config.serverIp}/seekers`, {
+            method: 'POST',
+            body: JSON.stringify({
+                seekerTitle: title,
+                seekerDescription: description,
+                destinationType: destinationType,
+                maxExpectedPrice: maxExpectedPrice,
+                seekerExpiryDate: seekerExpiryDate,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${session.accessToken}`
+            }
+        })
+        const request = await res.json()
+        if (!res.ok || !request) {
+            toast({
+                title: '创建失败',
+                description: `state: ${res.status}, message: ${response.message}`,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            return;
+        }
+        else {
+            toast({
+                title: '创建成功',
+                description: '即将跳转至请求页面',
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+            const timer = setTimeout(() => {
+                window.location.href = `/request?${request.seekerId}`
+            }, 2000)
+
+            return;
+        }
+    }
+
 
 
     return (
@@ -45,110 +144,49 @@ export default function Page() {
                                         isInvalid={isTitleInvalid}
                                     />
                                 </GridItem>
-                                <GridItem rowSpan={1} colSpan={3} p='4'>
-                                    <Text>真实姓名</Text>
-                                    <Input
-                                        value={realName}
-                                        onChange={(e) => setRealName(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isRealNameInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={3} p='4'>
-                                    <Text>密码</Text>
-                                    <Input
-                                        value={password}
-                                        type={show ? 'text' : 'password'}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isPasswordInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={3} p='4'>
-                                    <Text>确认密码</Text>
-                                    <Input
-                                        value={confirmPassword}
-                                        type={show ? 'text' : 'password'}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isConfirmPasswordInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={3} p='4'>
-                                    <Text>证件类型</Text>
-                                    <Menu>
-                                        <MenuButton w='full' as={Button} rightIcon={<ChevronDownIcon />} >
-                                            <Flex justify='left'>
-                                                {identityType}
-                                            </Flex>
-                                        </MenuButton>
-                                        <MenuList>
-                                            <MenuItem onClick={() => setIdentityType('居民身份证')}>居民身份证</MenuItem>
-                                            <MenuItem onClick={() => setIdentityType('护照')}>护照</MenuItem>
-                                        </MenuList>
-                                    </Menu>
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={3} p='4'>
-                                    <Text>证件号</Text>
-                                    <Input
-                                        value={identityNumber}
-                                        onChange={(e) => setIdentityNumber(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isIdentityNumberInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={3} p='4'>
-                                    <Text>电话号码</Text>
-                                    <Input
-                                        value={phoneNumber}
-                                        onChange={(e) => setPhoneNumber(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isPhoneNumberInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={3} p='4'>
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={2} p='4'>
-                                    <Text>国家</Text>
-                                    <Input
-                                        value={country}
-                                        onChange={(e) => setCountry(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isCountryInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={2} p='4'>
-                                    <Text>省份</Text>
-                                    <Input
-                                        value={province}
-                                        onChange={(e) => setProvince(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isProvinceInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={2} p='4'>
-                                    <Text>市</Text>
-                                    <Input
-                                        value={city}
-                                        onChange={(e) => setCity(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isCityInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={3} colSpan={6} p='4'>
-                                    <Text>个人简介</Text>
+                                <GridItem rowSpan={1} colSpan={1} p='4'>
+                                    <Text>描述</Text>
                                     <Textarea
-                                        value={introduction}
+                                        w='300px'
                                         h='200px'
-                                        onChange={(e) => setIntroduction(e.target.value)}
+                                        value={description}
+                                        onChange={(e) => setDescription(e.target.value)}
                                         errorBorderColor='crimson'
-                                        isInvalid={isIntroductionInvalid}
+                                        isInvalid={isDescriptionInvalid}
                                     />
                                 </GridItem>
+                                <GridItem rowSpan={1} colSpan={1} p='4'>
+                                    <Text>目的地类型</Text>
+                                    <Input
+                                        value={destinationType}
+                                        onChange={(e) => setDestinationType(e.target.value)}
+                                        errorBorderColor='crimson'
+                                        isInvalid={isDestinationTypeInvalid}
+                                    />
+                                </GridItem>
+                                <GridItem rowSpan={1} colSpan={1} p='4'>
+                                    <Text>最大期望价格</Text>
+                                    <Input
+                                        value={maxExpectedPrice}
+                                        onChange={(e) => setMaxExpectedPrice(e.target.value)}
+                                        errorBorderColor='crimson'
+                                        isInvalid={isMaxExpectedPriceInvalid}
+                                    />
+                                </GridItem>
+                                <GridItem rowSpan={1} colSpan={1} p='4'>
+                                    <Text>求购截止日期</Text>
+                                    <Input
+                                        value={seekerExpiryDate}
+                                        onChange={(e) => setSeekerExpiryDate(e.target.value)}
+                                        errorBorderColor='crimson'
+                                        isInvalid={isSeekerExpiryDateInvalid}
+                                    />
+                                </GridItem>
+
                             </Grid>
                         </CardBody>
                         <CardFooter>
-                            <Button colorScheme='telegram' size='lg' onClick={() => handleSubmit()} >完成</Button>
+                            <Button colorScheme='telegram' size='lg' onClick={() => handleSubmit()} >提交</Button>
                         </CardFooter>
                     </Card>
                 </>
