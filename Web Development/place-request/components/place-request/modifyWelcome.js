@@ -156,7 +156,7 @@ export default async function ModifyWelcome({ welcome }) {
                                         <Button ref={cancelRef} onClick={onClose}>
                                             取消
                                         </Button>
-                                        <Button colorScheme='red' onClick={() => { handleDelete(); }} ml={3}>
+                                        <Button colorScheme='red' onClick={() => { handleDelete(); onClose(); }} ml={3}>
                                             删除
                                         </Button>
                                     </AlertDialogFooter>

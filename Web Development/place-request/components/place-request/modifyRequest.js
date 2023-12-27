@@ -31,8 +31,9 @@ import { ChevronDownIcon } from '@chakra-ui/icons'
 import { useSession } from 'next-auth/react';
 import config from '@/app/config';
 
-export default function Page() {
+export default async function ModifyRequest({ requestId }) {
     const { data: session } = useSession();
+    const toast = useToast()
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -45,7 +46,27 @@ export default function Page() {
     const [isMaxExpectedPriceInvalid, setIsMaxExpectedPriceInvalid] = useState(false);
     const [isSeekerExpiryDateInvalid, setIsSeekerExpiryDateInvalid] = useState(false);
 
-    const toast = useToast()
+    const res = await fetch(`${config.serverIp}/seekers/${requestId}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    const request = await res.json();
+    if (!res.ok || !request) {
+        return (<>
+            <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            />
+        </>);
+    }
+
+    const requestSeekerExpiryDate = new Date(request.seekerExpiryDate).toISOString().split('T')[0];
+
     const handleSubmit = async () => {
         if (title === '' || title.length > 20) {
             toast({
@@ -95,8 +116,8 @@ export default function Page() {
         const dateObject = new Date(seekerExpiryDate);
         const date = dateObject.toISOString();
 
-        const res = await fetch(`${config.serverIp}/seekers`, {
-            method: 'POST',
+        const res = await fetch(`${config.serverIp}/seekers/${requestId}`, {
+            method: 'PATCH',
             body: JSON.stringify({
                 seekerTitle: title,
                 seekerDescription: description,
@@ -142,12 +163,13 @@ export default function Page() {
                 <>
                     <Card align='center' w='800px' h='auto'>
                         <CardHeader>
-                            <Heading size='lg' >创建请求</Heading>
+                            <Heading size='lg' >修改请求</Heading>
                         </CardHeader>
 
                         <CardBody w='700px'>
                             <Text>标题</Text>
                             <Input
+                                placeholder={request.seekerTitle}
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 errorBorderColor='crimson'
@@ -157,6 +179,7 @@ export default function Page() {
                             <Text>描述</Text>
                             <Textarea
                                 h='200px'
+                                placeholder={request.seekerDescription}
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 errorBorderColor='crimson'
@@ -167,7 +190,7 @@ export default function Page() {
                             <Menu>
                                 <MenuButton w='200px' as={Button} rightIcon={<ChevronDownIcon />} >
                                     <Flex justify='left'>
-                                        {destinationType}
+                                        {destinationType ? destinationType : request.destinationType}
                                     </Flex>
                                 </MenuButton>
                                 <MenuList maxHeight="200px" overflowY="auto">
@@ -179,6 +202,7 @@ export default function Page() {
                             <Box h='4' />
                             <Text>最大期望价格</Text>
                             <NumberInput min={0} max={999999}
+                                placeholder={request.maxExpectedPrice}
                                 value={maxExpectedPrice}
                                 onChange={(e) => setMaxExpectedPrice(e)}
                                 errorBorderColor='crimson'
@@ -189,6 +213,7 @@ export default function Page() {
                             <Box h='4' />
                             <Text>请求截止日期</Text>
                             <Input
+                                placeholder={requestSeekerExpiryDate}
                                 value={seekerExpiryDate}
                                 onChange={(e) => setSeekerExpiryDate(e.target.value)}
                                 errorBorderColor='crimson'

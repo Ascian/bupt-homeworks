@@ -5,7 +5,6 @@ import {
     Divider,
     Flex,
     Box,
-    Spinner,
     Link,
     Heading,
 
@@ -50,7 +49,7 @@ export default async function RequestCardPreview({ request }) {
                             </Flex>
                             <Box h='2' />
                             <Flex w='520px' >
-                                <Text color='grey' width='30%'>最近更新于{updateTime}</Text>
+                                <Text color='grey' width='50%'>最近更新于{updateTime}</Text>
                                 <Text color='grey'>截止于{seekerExpiryDate}</Text>
                             </Flex>
                         </Box>

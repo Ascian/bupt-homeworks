@@ -92,6 +92,7 @@ export default function Page() {
                 duration: 9000,
                 isClosable: true,
             })
+            window.location.reload();
             return;
         }
         // Return null if user data could not be retrieved
