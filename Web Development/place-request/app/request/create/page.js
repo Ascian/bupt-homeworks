@@ -93,7 +93,7 @@ export default function Page() {
         }
 
         const dateObject = new Date(seekerExpiryDate);
-        const date = dateObject.getTime();
+        const date = dateObject.toISOString();
 
         const res = await fetch(`${config.serverIp}/seekers`, {
             method: 'POST',
@@ -101,7 +101,7 @@ export default function Page() {
                 seekerTitle: title,
                 seekerDescription: description,
                 destinationType: destinationType,
-                maxExpectedPrice: maxExpectedPrice,
+                maxExpectedPrice: parseInt(maxExpectedPrice, 10),
                 seekerExpiryDate: date,
             }),
             headers: {

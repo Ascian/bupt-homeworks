@@ -24,7 +24,7 @@ export default async function LargeRequestCardPreview({ request }) {
                     <Image width='full' src="/picture.png" alt="picture" />
                     <Heading size='lg' maxW='250px' noOfLines={[1]}>{request.seekerTitle}</Heading>
                     <Box h='2' />
-                    <Text fontSize='sm' color='grey' >{`${createTime}    ${request.region}`}</Text>
+                    <Text fontSize='sm' color='grey' >{`${createTime}    ${request.userRegion}`}</Text>
                     <Box h='2' />
                     <Text fontSize='md' maxW='240px' maxH='140px' noOfLines={[1, 2, 3, 4]}>{request.seekerDescription}</Text>
                     <Box h='2' />
