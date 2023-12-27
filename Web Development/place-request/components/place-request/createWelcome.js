@@ -20,17 +20,17 @@ export default async function CreateWelcome({ requestId }) {
     const toast = useToast()
 
     const handleClick = async () => {
-        if (description.length > 10000) {
+        if (description === '' || description.length > 10000) {
             toast({
                 title: '描述不合法',
-                description: "描述长度不能超过10000",
+                description: "描述不能为空且长度不能超过10000",
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
             })
             setIsDescriptionInvalid(true);
             return;
-        }
+        } 
 
         const res = await fetch(`${config.serverIp}/offers`, {
             method: 'POST',
@@ -52,13 +52,14 @@ export default async function CreateWelcome({ requestId }) {
                 duration: 9000,
                 isClosable: true,
             })
+            window.location.reload();
             return;
         }
         // Return null if user data could not be retrieved
         else {
             const response = await res.json()
             toast({
-                title: '修改失败',
+                title: '提交失败',
                 description: `state: ${res.status}, message: ${response.message}`,
                 status: 'error',
                 duration: 9000,

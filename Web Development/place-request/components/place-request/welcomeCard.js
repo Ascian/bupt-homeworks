@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function WelcomeCard({ welcome }) {
-    const date = new Date(welcome.createTime).toLocaleDateString()
+    const date = new Date(welcome.updateTime).toLocaleDateString()
 
 
     return (

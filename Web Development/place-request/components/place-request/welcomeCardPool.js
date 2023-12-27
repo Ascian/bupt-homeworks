@@ -6,6 +6,7 @@ import {
     Divider,
     Heading,
     Spinner,
+    Flex,
 
 } from "@chakra-ui/react";
 import { useState } from 'react';
@@ -16,14 +17,14 @@ import WelcomeCard from "./welcomeCard";
 
 export default async function WelcomeCardPool({ requestId }) {
     const [page, setPage] = useState(1);
-    const res = await fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}`, {
+    const res = await fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
         },
     })
     const response = await res.json()
-    if (!res.ok || !response) {
+    if (!res.ok || response?.pageNum === null || response?.pageNum === undefined) {
         return (<>
             <Spinner
                 thickness='4px'
@@ -44,6 +45,13 @@ export default async function WelcomeCardPool({ requestId }) {
                     <Heading fontSize='30px' w='750px' textAlign='center' >欢迎来</Heading>
                     <Box h='2' />
                     <Divider w='750px' />
+
+                    {maxPage == 0 ? (
+                        <Flex width='750px' height='200px' alignItems='center' justifyContent='center' >
+                            <Text color='grey'>还没有评论，发表第一个评论吧</Text>
+                        </Flex>
+                    ) : (
+                        <>
                     {welcomes.map((welcome) => (
                         <>
                             <WelcomeCard welcome={welcome} />
@@ -59,6 +67,8 @@ export default async function WelcomeCardPool({ requestId }) {
                     <Box h='6' />
 
                     <Pagination setPage={setPage} page={page} maxPage={maxPage} />
+                        </>
+                    )}
                 </CardBody>
             </Card>
         </div>

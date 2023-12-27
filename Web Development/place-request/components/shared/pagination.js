@@ -6,11 +6,6 @@ import { useMemo, useState } from 'react';
 
 export default function Pagination({ setPage, page, maxPage }) {
     const [newPage, setNewPage] = useState(1);
-    const input = useMemo(() => {
-        return <Input variant='flushed' bgColor='white' w='8' textAlign="center" value={newPage} onChange={(e) => setNewPage(e.target.value)} />
-    }, [newPage]);
-    const toast = useToast();
-
 
     return (
         <Flex align='center' justify='center'>
@@ -47,7 +42,7 @@ export default function Pagination({ setPage, page, maxPage }) {
                 <Card bg="transparent" boxShadow="none" align='center' justify='center'>
                     <Text align='center' >至</Text>
                 </Card>
-                {input}
+                <Input variant='flushed' bgColor='white' w='8' textAlign="center" value={newPage} onChange={(e) => setNewPage(e.target.value)} />
                 <Card bg="transparent" boxShadow="none" align='center' justify='center'>
                     <Text align='center' >页</Text>
                 </Card>

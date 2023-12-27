@@ -40,7 +40,7 @@ export default async function Home() {
     })
 
     const response = await res.json();
-    if (!res.ok || !response?.pageNum) {
+    if (!res.ok || response?.pageNum === null || response?.pageNum === undefined) {
         return (<>
             <Spinner
                 thickness='4px'
@@ -55,6 +55,15 @@ export default async function Home() {
 
     return (
         <>
+            {maxPage == 0 ? (
+                <Card>
+                    <Alert status="warning">
+                        <AlertIcon />
+                        <AlertTitle >您所在地区不存在求助求助！</AlertTitle>
+                    </Alert>
+                </Card>
+            ) : (
+                <>
             <LargeRequestCardPreviewPool page={page} />
 
             <Box h='10' />
@@ -64,6 +73,8 @@ export default async function Home() {
             <Box h='6' />
 
             <Pagination setPage={setPage} page={page} maxPage={maxPage} />
+                </>
+            )}
         </>
     );
 }

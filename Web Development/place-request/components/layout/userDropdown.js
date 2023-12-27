@@ -60,6 +60,7 @@ export default function UserDropdown() {
                             </Stack>
                         </Button>
                     </Link>
+                    <Link href={`/user/requests`}>
                     <Button
                         w="full"
                         p={0}
@@ -72,6 +73,8 @@ export default function UserDropdown() {
                     >
                         我请求的
                     </Button>
+                    </Link>
+                    <Link href={`/user/offers`}>
                     <Button
                         w="full"
                         p={0}
@@ -84,6 +87,7 @@ export default function UserDropdown() {
                     >
                         我回复的
                     </Button>
+                    </Link>
                     <Button
                         w="full"
                         p={0}

@@ -11,7 +11,7 @@ import config from "@/app/config";
 export default async function LargeRequestCardPreviewPool({ page }) {
     const { data: session } = useSession();
 
-    const res = await fetch(`${config.serverIp}/seekers?page=${page}&page_size=10${session ? `&user_region=${session.user.city}` : ''}`, {
+    const res = await fetch(`${config.serverIp}/seekers?page=${page}&page_size=10${session ? `&user_region=${session.user.city}` : ''}&status_list=Active`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",

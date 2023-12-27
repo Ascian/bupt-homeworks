@@ -30,7 +30,7 @@ export default async function RequestCard({ requestId }) {
         </>);
     }
 
-    const createTime = new Date(request.createTime).toLocaleDateString()
+    const updateTime = new Date(request.updateTime).toLocaleDateString()
 
     return (
         <>
@@ -48,7 +48,7 @@ export default async function RequestCard({ requestId }) {
                     <Box h='4' />
                     <Heading fontSize='40px' maxW='600px' >{request.seekerTitle}</Heading>
                     <Box h='4' />
-                    <Text fontSize='md' color='grey' >{`${createTime}    ${request.userRegion}`}</Text>
+                    <Text fontSize='md' color='grey' >{`${updateTime}    ${request.userRegion}`}</Text>
                     <Box h='4' />
                     <Text fontSize='lg' maxW='600px' >{request.seekerDescription}</Text>
                     <Box h='4' />
