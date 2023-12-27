@@ -199,18 +199,6 @@ export default function Page() {
             return;
         }
 
-        console.log(JSON.stringify({
-            username: username,
-            password: password,
-            realName: realName,
-            documentType: identityTypes[identityType],
-            documentNumber: identityNumber,
-            phoneNumber: phoneNumber,
-            bio: introduction,
-            region: city,
-            district: province,
-            country: country,
-        }))
         const res = await fetch(`${config.serverIp}/users`, {
             method: 'POST',
             body: JSON.stringify({
@@ -376,7 +364,7 @@ export default function Page() {
                 </Grid>
             </CardBody>
             <CardFooter>
-                <Button size='lg' onClick={() => handleSubmit()} >完成</Button>
+                <Button colorScheme='telegram' size='lg' onClick={() => handleSubmit()} >完成</Button>
             </CardFooter>
         </Card >
     );

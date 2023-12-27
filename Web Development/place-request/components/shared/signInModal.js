@@ -101,7 +101,7 @@ export function SignInModal({
                             注册
                         </Button>
                     </Link>
-                    <Button colorScheme='blue' mr={3} onClick={handleSignIn}>
+                    <Button colorScheme='telegram' mr={3} onClick={handleSignIn}>
                         登录
                     </Button>
                 </ModalFooter>

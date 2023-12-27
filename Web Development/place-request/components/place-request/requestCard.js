@@ -53,7 +53,7 @@ export default async function RequestCard({ requestId }) {
                     <Box h='4' />
                     <Heading fontSize='40px' maxW='600px' >{request.seekerTitle}</Heading>
                     <Box h='4' />
-                    <Text fontSize='md' >{createTime}</Text>
+                    <Text fontSize='md' color='grey' >{`${createTime}  地点`}</Text>
                     <Box h='4' />
                     <Text fontSize='lg' maxW='600px' >{request.seekerDescription}</Text>
                     <Box h='4' />

@@ -124,7 +124,7 @@ export default function Page() {
                             <GridItem rowSpan={1} colSpan={3} p='4'>
                                 <Text>密码</Text>
                                 <Link href='/user/password'>
-                                    <Button colorScheme='blue' >修改密码</Button>
+                                    <Button colorScheme='telegram' >修改密码</Button>
                                 </Link>
                             </GridItem>
                             <GridItem rowSpan={1} colSpan={3} p='4'>
@@ -181,7 +181,7 @@ export default function Page() {
                         </Grid>
                     </CardBody>
                     <CardFooter>
-                        <Button size='lg' onClick={() => handleSubmit()}>确认修改</Button>
+                        <Button colorScheme='telegram' size='lg' onClick={() => handleSubmit()}>确认修改</Button>
                     </CardFooter>
                 </Card >
             ) : (

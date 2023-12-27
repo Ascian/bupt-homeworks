@@ -25,8 +25,9 @@ import {
     Spinner,
 } from '@chakra-ui/react';
 import { Suspense } from 'react';
-import { useState, } from 'react';
-import PublicRequestCardPool from '@/components/place-request/publicRequestCardPool';
+import { useState, useMemo } from 'react';
+import LargeRequestCardPreviewPool from '@/components/place-request/largeRequestCardPreviewPool';
+import Pagination from '@/components/shared/pagination';
 
 export default function Page() {
     const [page, setPage] = useState(1);
@@ -41,7 +42,7 @@ export default function Page() {
                 color='blue.500'
                 size='xl'
             />}>
-                <PublicRequestCardPool page={page} />
+                <LargeRequestCardPreviewPool page={page} />
 
                 <Box h='10' />
                 <Card bg="transparent" boxShadow="none" align='center' justify='center'>
@@ -49,24 +50,7 @@ export default function Page() {
                 </Card>
                 <Box h='6' />
 
-                <Flex align='center' justify='center'>
-                    <>
-                        {page === 1 ? <></> : (
-                            <>
-                                <Button onClick={() => setPage(page - 1)} >{'< '}上一页</Button>
-                                <Box w='8' />
-                            </>
-                        )}
-                    </>
-                    <>
-                        {page === maxPage ? <></> : (
-                            <>
-                                <Button onClick={() => setPage(page + 1)}>下一页{' >'}</Button>
-                                <Box w='8' />
-                            </>
-                        )}
-                    </>
-                </Flex>
+                <Pagination setPage={setPage} page={page} maxPage={maxPage} />
             </Suspense>
         </>
     );

@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import useSignInModal from '../shared/signInModal'
 import UserDropdown from './userDropdown'
 import { PlusSquareIcon } from '@chakra-ui/icons'
+import { Suspense } from 'react'
 
 
 export default function Nav() {
@@ -26,19 +27,23 @@ export default function Nav() {
                         }}>
                         <p>好去处</p>
                     </Link>
+                    <Suspense fallback={<></>}>
                     {session ? (
                         <Flex justify='flex-end' gap='10' >
-                            <IconButton p={0}
+                                <Link href="/request/create">
+                                    <IconButton p={0}
                                 bg="transparent"
                                 icon={<PlusSquareIcon w='30px' h='30px' />} />
+                                </Link>
                             <UserDropdown />
                         </Flex>
                     ) : (
                         <div>
-                            <Button onClick={setShowSignInModal}>登录</Button>
+                                    <Button onClick={setShowSignInModal} colorScheme='telegram'>登录</Button>
                             <SignInModal />
                         </div>
                     )}
+                    </Suspense>
                 </div>
             </div>
         </>

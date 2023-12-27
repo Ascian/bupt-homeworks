@@ -6,12 +6,12 @@ import {
     AlertIcon,
     AlertTitle,
 } from "@chakra-ui/react";
-import PublicRequestCard from "./publicRequestCard";
+import LargeRequestCardPreview from "./largeRequestCardPreview";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import config from "@/app/config";
 
-export default async function PublicRequestCardPool({ page }) {
+export default async function LargeRequestCardPreviewPool({ page }) {
     const res = await fetch(`${config.serverIp}/seekers?page=${page}&page_size=10`, {
         method: 'GET',
         headers: {
@@ -39,7 +39,7 @@ export default async function PublicRequestCardPool({ page }) {
             </GridItem>
             {requests.map((request) => (
                 <GridItem rowSpan={5} colSpan={1} p='4'>
-                    <PublicRequestCard request={request} />
+                    <RequestCardPreview request={request} />
                 </GridItem>
             ))}
         </Grid >

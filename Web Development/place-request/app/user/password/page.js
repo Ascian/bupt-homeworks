@@ -186,7 +186,7 @@ export default function Page() {
                         </Grid>
                     </CardBody>
                     <CardFooter>
-                        <Button size='lg' onClick={() => handleSubmit()}>确认修改</Button>
+                        <Button colorScheme='telegram' size='lg' onClick={() => handleSubmit()}>确认修改</Button>
                     </CardFooter>
                 </Card >
             ) : (

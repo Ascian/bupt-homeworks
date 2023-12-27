@@ -1,13 +1,27 @@
 'use client'
 
-import { Spinner } from '@chakra-ui/react';
-import { Suspense } from 'react';
+import {
+    Box,
+    Spinner,
+    Card,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+
+} from '@chakra-ui/react';
+import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import RequestCard from '@/components/place-request/requestCard';
+import CreateWelcome from '@/components/place-request/createWelcome';
+import WelcomeCardPool from '@/components/place-request/welcomeCardPool';
 
 export default function Page() {
     const searchParams = useSearchParams();
-    console.log(searchParams);
+    const requestId = searchParams.get('requestId');
+    const { data: session } = useSession();
+
+    const RequestCardMemo = React.memo(RequestCard);
 
     return (
         <>
@@ -18,7 +32,24 @@ export default function Page() {
                 color='blue.500'
                 size='xl'
             />}>
-                <RequestCard requestId={searchParams.get('requestId')} />
+                <RequestCardMemo requestId={requestId} />
+
+                <Box h='10' />
+
+                {session ? (
+                    <CreateWelcome requestId={searchParams.get('requestId')} userId={session.user.userId} />
+                ) : (
+                    <Card align='left' w='800px'>
+                        <Alert status='error'>
+                            <AlertIcon />
+                            <AlertTitle>登录后可回复</AlertTitle>
+                        </Alert >
+                    </Card >
+                )
+                }
+
+                <Box h='10' />
+                <WelcomeCardPool requestId={requestId} />
             </Suspense>
         </>
     );

@@ -9,7 +9,7 @@ import {
     Link,
 } from "@chakra-ui/react";
 
-export default async function PublicRequestCard({ request }) {
+export default async function LargeRequestCardPreview({ request }) {
     const date = new Date(request.createTime);
     const createTime = date.toLocaleDateString()
 
@@ -24,7 +24,7 @@ export default async function PublicRequestCard({ request }) {
                     <Image width='full' src="/picture.png" alt="picture" />
                     <Heading size='lg' maxW='250px' noOfLines={[1]}>{request.seekerTitle}</Heading>
                     <Box h='2' />
-                    <Text fontSize='sm' >{createTime}</Text>
+                    <Text fontSize='sm' color='grey' >{`${createTime}  地点`}</Text>
                     <Box h='2' />
                     <Text fontSize='md' maxW='240px' maxH='140px' noOfLines={[1, 2, 3, 4]}>{request.seekerDescription}</Text>
                     <Box h='4' />
