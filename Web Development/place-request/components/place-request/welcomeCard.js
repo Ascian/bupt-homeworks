@@ -16,7 +16,7 @@ export default function WelcomeCard({ welcome }) {
 
     return (
         <div>
-            <Card align='center' w='800px' h='auto' bg="transparent" boxShadow="none">
+            <Card align='center' w='750px' h='auto' bg="transparent" boxShadow="none">
                 <CardBody>
                     <Flex w='700px' >
                         <Image borderRadius="full" boxSize="40px" src="/userIcon.png" alt="User Icon" />

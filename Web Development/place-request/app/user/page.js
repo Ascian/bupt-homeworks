@@ -25,7 +25,6 @@ import { useState } from 'react';
 import config from '@/app/config'
 
 export default function Page() {
-    const [show, setShow] = useState(false);
     const { data: session, update } = useSession();
 
     const [phoneNumber, setPhoneNumber] = useState('');

@@ -1,16 +1,39 @@
 'use client'
+
 import {
+    Box,
     Alert,
     AlertIcon,
     AlertTitle,
     Card,
     Grid,
-} from '@chakra-ui/react';
-import { useSession } from 'next-auth/react';
+    CardBody,
+    CardHeader,
+    CardFooter,
+    GridItem,
+    Heading,
+    Input,
+    Text,
+    Textarea,
+    Button,
+    Flex,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    NumberInput,
+    NumberInputField,
 
+} from '@chakra-ui/react';
+import { useState } from 'react';
+import { useToast } from '@chakra-ui/toast';
+import { ChevronDownIcon } from '@chakra-ui/icons'
+import { useSession } from 'next-auth/react';
+import config from '@/app/config';
 
 export default function Page() {
-    const { date: session } = useSession();
+    const { data: session } = useSession();
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [destinationType, setDestinationType] = useState('')
@@ -19,7 +42,6 @@ export default function Page() {
 
     const [isTitleInvalid, setIsTitleInvalid] = useState(false);
     const [isDescriptionInvalid, setIsDescriptionInvalid] = useState(false);
-    const [isDestinationTypeInvalid, setIsDestinationTypeInvalid] = useState(false);
     const [isMaxExpectedPriceInvalid, setIsMaxExpectedPriceInvalid] = useState(false);
     const [isSeekerExpiryDateInvalid, setIsSeekerExpiryDateInvalid] = useState(false);
 
@@ -47,17 +69,6 @@ export default function Page() {
             setIsDescriptionInvalid(true);
             return;
         }
-        if (destinationType === '' || destinationType.length > 20) {
-            toast({
-                title: '目的地类型不合法',
-                description: "目的地类型不能为空且长度不能超过20",
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            })
-            setIsDestinationTypeInvalid(true);
-            return;
-        }
         if (maxExpectedPrice < 0 || maxExpectedPrice > 1000000) {
             toast({
                 title: '最大期望价格不合法',
@@ -81,6 +92,9 @@ export default function Page() {
             return;
         }
 
+        const dateObject = new Date(seekerExpiryDate);
+        const date = dateObject.getTime();
+
         const res = await fetch(`${config.serverIp}/seekers`, {
             method: 'POST',
             body: JSON.stringify({
@@ -88,7 +102,7 @@ export default function Page() {
                 seekerDescription: description,
                 destinationType: destinationType,
                 maxExpectedPrice: maxExpectedPrice,
-                seekerExpiryDate: seekerExpiryDate,
+                seekerExpiryDate: date,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -99,7 +113,7 @@ export default function Page() {
         if (!res.ok || !request) {
             toast({
                 title: '创建失败',
-                description: `state: ${res.status}, message: ${response.message}`,
+                description: `state: ${res.status}, message: ${request.message}`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -115,75 +129,72 @@ export default function Page() {
                 isClosable: true,
             })
             const timer = setTimeout(() => {
-                window.location.href = `/request?${request.seekerId}`
+                window.location.href = `/request?request_id=${request.seekerId}`
             }, 2000)
 
             return;
         }
     }
 
-
-
     return (
         <>
             {session ? (
                 <>
-                    <Card align='center' w='800px' h='500px'>
+                    <Card align='center' w='800px' h='auto'>
                         <CardHeader>
                             <Heading size='lg' >创建请求</Heading>
                         </CardHeader>
 
-                        <CardBody>
-                            <Grid templateRows='repeat(8, 1fr)' templateColumns='repeat(2, 1fr)' gap={1}>
-                                <GridItem rowSpan={1} colSpan={1} p='4'>
-                                    <Text>标题</Text>
-                                    <Input
-                                        value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isTitleInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={1} p='4'>
-                                    <Text>描述</Text>
-                                    <Textarea
-                                        w='300px'
-                                        h='200px'
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isDescriptionInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={1} p='4'>
-                                    <Text>目的地类型</Text>
-                                    <Input
-                                        value={destinationType}
-                                        onChange={(e) => setDestinationType(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isDestinationTypeInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={1} p='4'>
-                                    <Text>最大期望价格</Text>
-                                    <Input
-                                        value={maxExpectedPrice}
-                                        onChange={(e) => setMaxExpectedPrice(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isMaxExpectedPriceInvalid}
-                                    />
-                                </GridItem>
-                                <GridItem rowSpan={1} colSpan={1} p='4'>
-                                    <Text>求购截止日期</Text>
-                                    <Input
-                                        value={seekerExpiryDate}
-                                        onChange={(e) => setSeekerExpiryDate(e.target.value)}
-                                        errorBorderColor='crimson'
-                                        isInvalid={isSeekerExpiryDateInvalid}
-                                    />
-                                </GridItem>
-
-                            </Grid>
+                        <CardBody w='700px'>
+                            <Text>标题</Text>
+                            <Input
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                errorBorderColor='crimson'
+                                isInvalid={isTitleInvalid}
+                            />
+                            <Box h='4' />
+                            <Text>描述</Text>
+                            <Textarea
+                                h='200px'
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                errorBorderColor='crimson'
+                                isInvalid={isDescriptionInvalid}
+                            />
+                            <Box h='4' />
+                            <Text>目的地类型</Text>
+                            <Menu>
+                                <MenuButton w='200px' as={Button} rightIcon={<ChevronDownIcon />} >
+                                    <Flex justify='left'>
+                                        {destinationType}
+                                    </Flex>
+                                </MenuButton>
+                                <MenuList maxHeight="200px" overflowY="auto">
+                                    {config.destinationTypes.map((type) => (
+                                        <MenuItem onClick={() => setDestinationType(type)}>{type}</MenuItem>
+                                    ))}
+                                </MenuList>
+                            </Menu>
+                            <Box h='4' />
+                            <Text>最大期望价格</Text>
+                            <NumberInput min={0} max={999999}
+                                value={maxExpectedPrice}
+                                onChange={(e) => setMaxExpectedPrice(e)}
+                                errorBorderColor='crimson'
+                                isInvalid={isMaxExpectedPriceInvalid}
+                            >
+                                <NumberInputField />
+                            </NumberInput>
+                            <Box h='4' />
+                            <Text>求购截止日期</Text>
+                            <Input
+                                value={seekerExpiryDate}
+                                onChange={(e) => setSeekerExpiryDate(e.target.value)}
+                                errorBorderColor='crimson'
+                                isInvalid={isSeekerExpiryDateInvalid}
+                                type="date"
+                            />
                         </CardBody>
                         <CardFooter>
                             <Button colorScheme='telegram' size='lg' onClick={() => handleSubmit()} >提交</Button>

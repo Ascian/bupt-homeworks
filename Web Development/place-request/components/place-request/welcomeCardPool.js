@@ -2,17 +2,13 @@ import {
     Box,
     Card,
     CardBody,
-    Flex,
     Text,
-    Textarea,
     Divider,
-    AbsoluteCenter,
     Heading,
+    Spinner,
 
 } from "@chakra-ui/react";
-import { useToast } from '@chakra-ui/toast';
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
 import config from '@/app/config'
 import Pagination from '@/components/shared/pagination'
 import WelcomeCard from "./welcomeCard";
@@ -20,24 +16,26 @@ import WelcomeCard from "./welcomeCard";
 
 export default async function WelcomeCardPool({ requestId }) {
     const [page, setPage] = useState(1);
-    const maxPage = 1;
-    const res = await fetch(`${config.serverIp}/offers?page=${page}&page_size=10`, {
+    const res = await fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
         },
     })
-    const welcomes = await res.json()
-    if (!res.ok || !welcomes) {
+    const response = await res.json()
+    if (!res.ok || !response) {
         return (<>
-            <Card align='center' w='800px'>
-                <Alert status='error'>
-                    <AlertIcon />
-                    <AlertTitle>请求回复失败，请稍后重试</AlertTitle>
-                </Alert>
-            </Card >
+            <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            /> 
         </>);
     }
+    const welcomes = response.data
+    const maxPage = response.pageNum;
 
     return (
         <div>

@@ -15,7 +15,7 @@ export default async function LargeRequestCardPreview({ request }) {
 
     return (
         <Link
-            href={`/request?requestId=${request.seekerId}`}
+            href={`/request?request_id=${request.seekerId}`}
             style={{
                 textDecoration: 'none'
             }}>
@@ -24,9 +24,11 @@ export default async function LargeRequestCardPreview({ request }) {
                     <Image width='full' src="/picture.png" alt="picture" />
                     <Heading size='lg' maxW='250px' noOfLines={[1]}>{request.seekerTitle}</Heading>
                     <Box h='2' />
-                    <Text fontSize='sm' color='grey' >{`${createTime}  地点`}</Text>
+                    <Text fontSize='sm' color='grey' >{`${createTime}    ${request.region}`}</Text>
                     <Box h='2' />
                     <Text fontSize='md' maxW='240px' maxH='140px' noOfLines={[1, 2, 3, 4]}>{request.seekerDescription}</Text>
+                    <Box h='2' />
+                    <Text fontSize='md' color='grey' >{request.destinationType}</Text>
                     <Box h='4' />
                     <Flex justify="flex-start" align='center' w='240px' >
                         <Flex justify="flex-start" align='center' w='240px' >

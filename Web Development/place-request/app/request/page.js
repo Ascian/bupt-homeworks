@@ -18,7 +18,7 @@ import WelcomeCardPool from '@/components/place-request/welcomeCardPool';
 
 export default function Page() {
     const searchParams = useSearchParams();
-    const requestId = searchParams.get('requestId');
+    const requestId = searchParams.get('request_id');
     const { data: session } = useSession();
 
     const RequestCardMemo = React.memo(RequestCard);
@@ -37,7 +37,7 @@ export default function Page() {
                 <Box h='10' />
 
                 {session ? (
-                    <CreateWelcome requestId={searchParams.get('requestId')} userId={session.user.userId} />
+                    <CreateWelcome requestId={requestId} userId={session.user.userId} />
                 ) : (
                     <Card align='left' w='800px'>
                         <Alert status='error'>

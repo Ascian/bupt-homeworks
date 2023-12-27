@@ -299,8 +299,9 @@ export default function Page() {
                                 </Flex>
                             </MenuButton>
                             <MenuList>
-                                <MenuItem onClick={() => setIdentityType('居民身份证')}>居民身份证</MenuItem>
-                                <MenuItem onClick={() => setIdentityType('护照')}>护照</MenuItem>
+                                {config.identityTypes.map((type) => (
+                                    <MenuItem onClick={() => setIdentityType(type)}>{type}</MenuItem>
+                                ))}
                             </MenuList>
                         </Menu>
                     </GridItem>
