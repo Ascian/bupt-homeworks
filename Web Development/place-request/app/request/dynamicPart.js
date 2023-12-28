@@ -46,9 +46,9 @@ export default async function DynamicPart({ requestId }) {
 
     useEffect(() => {
         async function fetchData() {
-        let isRequestOk = false;
-        let isOfferOk = false;
-        let isWelcomeOk = false;
+            let isRequestOk = false;
+            let isOfferOk = false;
+            let isWelcomeOk = false;
 
             await fetch(`${config.serverIp}/seekers/${requestId}`, {
                 method: 'GET',
@@ -56,48 +56,52 @@ export default async function DynamicPart({ requestId }) {
                     "Content-Type": "application/json",
                 },
             }).then((res) => res.json())
-            .then((request) => {
-                if (request?.seekerId) {
-                    setRequest(request);
-                    isRequestOk = true;
-                }
-            });
+                .then((request) => {
+                    if (request?.seekerId) {
+                        console.log(request)
+                        setRequest(request);
+                        isRequestOk = true;
+                    }
+                });
 
             if (isRequestOk) {
-        fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${request.seekerId}&page=1&page_size=1`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res.json())
-            .then((offerResponse) => {
-                if (offerResponse?.data) {
-                    setOffers(offerResponse.data);
-                    isOfferOk = true;
-                }
-            });
-        fetch(`${config.serverIp}/offers?seeker_id=${request.seekerId}&page=1&page_size=1`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res.json())
-            .then((welcomeResponse) => {
-                if (welcomeResponse?.data) {
-                    setWelcomes(welcomeResponse.data);
-                    isWelcomeOk = true;
-                }   
-            });
+                await Promise.all([
+                    fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${request.seekerId}&page=1&page_size=1`, {
+                        method: 'GET',
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }).then((res) => res.json())
+                        .then((offerResponse) => {
+                            if (offerResponse?.data) {
+                                setOffers(offerResponse.data);
+                                isOfferOk = true;
+                            }
+                        }),
+                    fetch(`${config.serverIp}/offers?seeker_id=${request.seekerId}&page=1&page_size=1`, {
+                        method: 'GET',
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }).then((res) => res.json())
+                        .then((welcomeResponse) => {
+                            if (welcomeResponse?.data) {
+                                setWelcomes(welcomeResponse.data);
+                                isWelcomeOk = true;
+                            }   
+                        })])
+            }
+
         setIsRequester(session?.user?.id === request.userId);
         setIsOfferer(offers?.length > 0);
         setIsReplied(welcomes?.length > 0);
+
         if (isRequestOk && isOfferOk && isWelcomeOk) {
             setIsLoading(false);
         }
-            }
-            fetchData();
         }
 
+        fetchData();
     }, [session, requestId])
 
     // Fetch welcome to know if the request is replied
@@ -136,6 +140,17 @@ export default async function DynamicPart({ requestId }) {
         }
     }
 
+    if (isLoading) {
+        return (
+            <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            />
+        )
+    }
 
     const statusAlert = {
         'Active': 'info',
@@ -152,18 +167,6 @@ export default async function DynamicPart({ requestId }) {
         'Declined': '已拒绝',
         'Cancelled': '已撤消',
         'Expired': '已过期'
-    }
-
-    if (isLoading) {
-        return (
-            <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='blue.500'
-                size='xl'
-            />
-        )
     }
     return (
         <>
