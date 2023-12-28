@@ -8,7 +8,7 @@ import {
     AlertIcon,
     AlertTitle,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Pagination from "../shared/pagination";
 import RequestCardPreview from './requestCardPreview';
@@ -17,16 +17,28 @@ import config from '@/app/config';
 export default async function RequestCardPreviewPool() {
     const { data: session } = useSession();
     const [page, setPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(0);
+    const [requests, setRequests] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const res = await fetch(`${config.serverIp}/seekers/mine?page=${page}&pageSize=10`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${session.accessToken}`
-        },
-    });
-    const response = await res.json()
-    if (!res.ok || response?.pageNum === null || response?.pageNum === undefined) {
+    useEffect(() => {
+        fetch(`${config.serverIp}/seekers/mine?page=${page}&pageSize=10`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${session.accessToken}`
+            },
+        }).then((res) => res.json())
+            .then((response) => {
+                if (response?.pageNum) {
+                    setMaxPage(response.pageNum);
+                    setRequests(response.data);
+                    setIsLoading(false);
+                }
+            })
+    }, [session, page])
+
+    if (isLoading) {
         return (<>
             <Spinner
                 thickness='4px'
@@ -37,8 +49,6 @@ export default async function RequestCardPreviewPool() {
             />
         </>);
     }
-    const maxPage = response.pageNum;
-    const requests = response.data
 
     return (
         <>

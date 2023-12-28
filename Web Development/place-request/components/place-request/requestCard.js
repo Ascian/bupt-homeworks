@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Card,
     CardBody,
@@ -9,16 +11,31 @@ import {
     Spinner,
 } from '@chakra-ui/react';
 import config from '@/app/config'
+import { useEffect, useState } from 'react';
 
 export default async function RequestCard({ requestId }) {
-    const res = await fetch(`${config.serverIp}/seekers/${requestId}`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const request = await res.json()
-    if (!res.ok || !request) {
+    const [request, setRequest] = useState({});
+    const [updateTime, setUpdateTime] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+
+
+    useEffect(() => {
+        fetch(`${config.serverIp}/seekers/${requestId}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+            .then((request) => {
+                if (request) {
+                    setRequest(request);
+                    setUpdateTime(new Date(request.updateTime).toLocaleDateString());
+                    setIsLoading(false);
+                }
+            })
+    }, [requestId])
+
+    if (isLoading) {
         return (<>
             <Spinner
                 thickness='4px'
@@ -26,11 +43,9 @@ export default async function RequestCard({ requestId }) {
                 emptyColor='gray.200'
                 color='blue.500'
                 size='xl'
-            /> 
+            />
         </>);
     }
-
-    const updateTime = new Date(request.updateTime).toLocaleDateString()
 
     return (
         <>

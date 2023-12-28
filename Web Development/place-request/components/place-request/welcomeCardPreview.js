@@ -1,3 +1,5 @@
+'use client'
+
 import {
     CardBody,
     Card,
@@ -11,30 +13,40 @@ import {
 
 } from "@chakra-ui/react";
 import config from '@/app/config'
+import { useEffect, useState } from "react";
 
 export default async function WelcomeCardPreview({ welcome }) {
+    const [request, setRequest] = useState({});
+    const [updateTime, setUpdateTime] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
-    const res = await fetch(`${config.serverIp}/seekers/${welcome.seekerId}`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const request = await res.json()
-    if (!res.ok || !request) {
+    useEffect(() => {
+        fetch(`${config.serverIp}/seekers/${welcome.seekerId}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+            .then((request) => {
+                if (request) {
+                    setRequest(request);
+                    setUpdateTime(new Date(request.updateTime).toLocaleDateString());
+                    setIsLoading(false);
+                }
+            })
+    }, [requestId, welcome])
+
+    if (isLoading) {
         return (<>
-            <Card w='750px' h='auto'>
-                <Spinner
-                    thickness='4px'
-                    speed='0.65s'
-                    emptyColor='gray.200'
-                    color='blue.500'
-                    size='xl'
-                />
-            </Card>
+            <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            />
         </>);
     }
-    const updateTime = new Date(welcome.updateTime).toLocaleDateString();
 
     const statusColor = {
         'Active': 'green',

@@ -11,7 +11,7 @@ import {
     Flex,
 
 } from "@chakra-ui/react";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import config from '@/app/config'
 import Pagination from '@/components/shared/pagination'
 import WelcomeCard from "./welcomeCard";
@@ -19,33 +19,42 @@ import WelcomeCard from "./welcomeCard";
 
 export default async function WelcomeCardPool({ requestId, isRequester, isRequestActive }) {
     const [page, setPage] = useState(1);
-    const res = await fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const response = await res.json()
-    if (!res.ok || response?.pageNum === null || response?.pageNum === undefined) {
-        return (<>
-            <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='blue.500'
-                size='xl'
-            /> 
-        </>);
-    }
 
-    const acceptRes = await fetch(`${config.serverIp}/offers?page=${page}&page_size=1&seeker_id=${requestId}&status_list=Accepted`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const acceptResponse = await acceptRes.json()
-    if (!acceptRes.ok || acceptResponse?.pageNum === null || acceptResponse?.pageNum === undefined) {
+    useEffect(() => {
+        let isWelcomeOk = true;
+        let isAcceptWelcomeOk = true;
+        fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+            .then((response) => {
+                if (response?.pageNum) {
+                    setMaxPage(response.pageNum);
+                    setWelcomes(response.data);
+                    isWelcomeOk = true;
+                }
+            });
+        fetch(`${config.serverIp}/offers?page=${page}&page_size=1&seeker_id=${requestId}&status_list=Accepted`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+            .then((response) => {
+                if (response?.pageNum) {
+                    setAcceptWelcomes(response.data);
+                    isAcceptWelcomeOk = true;
+                }
+            });
+        if (isWelcomeOk && isAcceptWelcomeOk) {
+            setIsLoading(false);
+        }
+    }, [page, requestId])
+
+
+    if (isLoading) {
         return (<>
             <Spinner
                 thickness='4px'
@@ -57,11 +66,6 @@ export default async function WelcomeCardPool({ requestId, isRequester, isReques
         </>);
     }
 
-
-    const welcomes = response.data
-    const maxPage = response.pageNum;
-    const acceptWelcomes = acceptResponse.data
-    console.log(acceptWelcomes)
 
     return (
         <div>

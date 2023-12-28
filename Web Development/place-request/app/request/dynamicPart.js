@@ -45,6 +45,9 @@ export default async function DynamicPart({ requestId }) {
     const toast = useToast();
 
     useEffect(() => {
+        let isRequestOk = false;
+        let isOfferOk = false;
+        let isWelcomeOk = false;
         fetch(`${config.serverIp}/seekers/${requestId}`, {
             method: 'GET',
             headers: {
@@ -55,6 +58,7 @@ export default async function DynamicPart({ requestId }) {
             .then((request) => {
                 if (request?.seekerId) {
                     setRequest(request);
+                    isRequestOk = true;
                 }
             });
         fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${request.seekerId}&page=1&page_size=1`, {
@@ -66,6 +70,7 @@ export default async function DynamicPart({ requestId }) {
             .then((offerResponse) => {
                 if (offerResponse?.data) {
                     setOffers(offerResponse.data);
+                    isOfferOk = true;
                 }
             });
         fetch(`${config.serverIp}/offers?seeker_id=${request.seekerId}&page=1&page_size=1`, {
@@ -77,14 +82,16 @@ export default async function DynamicPart({ requestId }) {
             .then((welcomeResponse) => {
                 if (welcomeResponse?.data) {
                     setWelcomes(welcomeResponse.data);
+                    isWelcomeOk = true;
                 }   
             });
         setIsRequester(session?.user?.id === request.userId);
         setIsOfferer(offers?.length > 0);
         setIsReplied(welcomes?.length > 0);
-        if (request?.seekerId && offerResponse?.data && welcomeResponse?.data) {
+        if (isRequestOk && isOfferOk && isWelcomeOk) {
             setIsLoading(false);
         }
+
     }, [session, requestId])
 
     // Fetch welcome to know if the request is replied
