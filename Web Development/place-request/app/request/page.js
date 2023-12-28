@@ -34,8 +34,6 @@ export default function Page() {
 
                 <DynamicPart requestId={requestId} />
 
-                <Box h='10' />
-                <WelcomeCardPool requestId={requestId} />
             </Suspense>
         </>
     );

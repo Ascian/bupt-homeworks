@@ -1,8 +1,7 @@
 `use client`
 
 import { Box, Button, Flex, Input, Text, Card } from '@chakra-ui/react';
-import { useToast } from '@chakra-ui/toast';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 export default function Pagination({ setPage, page, maxPage }) {
     const [newPage, setNewPage] = useState(1);

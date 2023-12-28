@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Button,
     Card,
@@ -26,6 +28,7 @@ import { useSession } from 'next-auth/react';
 import config from '@/app/config';
 import CreateWelcome from '@/components/place-request/createWelcome';
 import WelcomeCard from '@/components/place-request/welcomeCard';
+import WelcomeCardPool from '@/components/place-request/welcomeCardPool';
 import ModifyWelcome from "@/components/place-request/modifyWelcome";
 
 export default async function DynamicPart({ requestId }) {
@@ -138,12 +141,14 @@ export default async function DynamicPart({ requestId }) {
     const statusAlert = {
         'Active': 'info',
         'Accepted': 'success',
+        'Completed': 'success',
         'Declined': 'error',
         'Cancelled': 'warning',
         'Expired': 'warning'
     }
     const status = {
         'Active': '已有他人回复等待确认',
+        'Completed': '已完成',
         'Accepted': '已接受',
         'Declined': '已拒绝',
         'Cancelled': '已撤消',
@@ -257,6 +262,9 @@ export default async function DynamicPart({ requestId }) {
                     </Card >
                 )
             }
+
+            <Box h='10' />
+            <WelcomeCardPool requestId={requestId} isRequester={isRequester} isRequestActive={request.status === 'Active'} />
 
         </>
     );

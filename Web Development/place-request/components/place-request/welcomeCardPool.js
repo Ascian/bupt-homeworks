@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Box,
     Card,
@@ -15,7 +17,7 @@ import Pagination from '@/components/shared/pagination'
 import WelcomeCard from "./welcomeCard";
 
 
-export default async function WelcomeCardPool({ requestId }) {
+export default async function WelcomeCardPool({ requestId, isRequester, isRequestActive }) {
     const [page, setPage] = useState(1);
     const res = await fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
         method: 'GET',
@@ -35,8 +37,31 @@ export default async function WelcomeCardPool({ requestId }) {
             /> 
         </>);
     }
+
+    const acceptRes = await fetch(`${config.serverIp}/offers?page=${page}&page_size=1&seeker_id=${requestId}&status_list=Accepted`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    const acceptResponse = await acceptRes.json()
+    if (!acceptRes.ok || acceptResponse?.pageNum === null || acceptResponse?.pageNum === undefined) {
+        return (<>
+            <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            />
+        </>);
+    }
+
+
     const welcomes = response.data
     const maxPage = response.pageNum;
+    const acceptWelcomes = acceptResponse.data
+    console.log(acceptWelcomes)
 
     return (
         <div>
@@ -46,15 +71,21 @@ export default async function WelcomeCardPool({ requestId }) {
                     <Box h='2' />
                     <Divider w='750px' />
 
-                    {maxPage == 0 ? (
+                    {maxPage == 0 && acceptWelcomes.length == 0 ? (
                         <Flex width='750px' height='200px' alignItems='center' justifyContent='center' >
                             <Text color='grey'>还没有评论，发表第一个评论吧</Text>
                         </Flex>
                     ) : (
-                        <>
-                    {welcomes.map((welcome) => (
-                        <>
-                            <WelcomeCard welcome={welcome} />
+                            <>
+                                {acceptWelcomes.map((welcome) => (
+                                    <>
+                                        <WelcomeCard welcome={welcome} isRequester={isRequester} isRequestActive={isRequestActive} isWelcomeAccepted={true} />
+                                        <Divider orientation='horizontal' w='750px' />
+                                    </>
+                                ))}
+                                {welcomes.map((welcome) => (
+                                    <>
+                                        <WelcomeCard welcome={welcome} isRequester={isRequester} isRequestActive={isRequestActive} isWelcomeAccepted={false} />
                             <Divider orientation='horizontal' w='750px' />
                         </>
                     ))}
