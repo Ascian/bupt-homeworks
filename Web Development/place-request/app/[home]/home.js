@@ -35,7 +35,7 @@ export default async function Home() {
 
         if (status != 'loading' && !isFetched) {
 
-            fetch(`${config.serverIp}/seekers?page_size=10${session ? `&user_region=${session.user.city}` : ''}&status_list=Active${searchParams ? `&${searchParams.toString()}` : ''}`, {
+            fetch(`${config.serverIp}/seekers?page_size=10${session ? `&user_region=${session.user.city}` : ''}&status_list=Active&${searchParams}`, {
                 method: 'GET',
             }).then((res) => res.json())
                 .then((response) => {

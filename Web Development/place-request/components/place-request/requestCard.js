@@ -8,7 +8,7 @@ import {
     Text,
     Box,
     Flex,
-    Spinner,
+    Link,
 } from '@chakra-ui/react';
 
 export default function RequestCard({ request }) {
@@ -17,12 +17,13 @@ export default function RequestCard({ request }) {
     return (
         <>
             <Card align='center' w='800px' h='auto'>
-
                 <CardBody>
                     <Image w='600px' src="/picture.png" alt="picture" />
                     <Flex justify="flex-start" align='center' w='600px' >
                         <Flex justify="flex-start" align='center' w='600px' >
+                            <Link href={`/manager/user?user_id=${request.userId}`} style={{ textDecoration: 'none' }}>
                             <Image borderRadius="full" boxSize="50px" src="/userIcon.png" alt="User Icon" />
+                            </Link>
                             <Box w="4" />
                             <Text fontSize='30px' >{request.username}</Text>
                         </Flex>

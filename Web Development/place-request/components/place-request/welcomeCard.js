@@ -16,6 +16,7 @@ import {
     AlertDialogHeader,
     AlertDialogContent,
     AlertDialogOverlay,
+    Link,
 
 
 } from "@chakra-ui/react";
@@ -92,7 +93,9 @@ export default function WelcomeCard({ welcome, showButton, isWelcomeAccepted }) 
             <Card align='center' w='750px' h='auto' bg="transparent" boxShadow="none">
                 <CardBody>
                     <Flex w='700px' >
+                        <Link href={`/manager/user?user_id=${welcome.userId}`} style={{ textDecoration: 'none' }}>
                         <Image borderRadius="full" boxSize="40px" src="/userIcon.png" alt="User Icon" />
+                        </Link>
                         <Box w="4" />
                         <Flex w='600px' justify='flex-start' align='center' >
                             <Stack >
