@@ -134,7 +134,7 @@ export default function WelcomeCard({ welcome, isRequester, isRequestActive, isW
                                                     </AlertDialogBody>
 
                                                     <AlertDialogFooter>
-                                                        <Button ref={cancelRef} onClick={onAcceptClose}>
+                                                        <Button ref={cancelRef} onClick={() => { onAcceptClose(); window.location.reload(); }}>
                                                             取消
                                                         </Button>
                                                         <Button colorScheme='red' onClick={() => { handleAccept(); onAcceptClose(); }} ml={3}>
@@ -163,7 +163,7 @@ export default function WelcomeCard({ welcome, isRequester, isRequestActive, isW
                                                     </AlertDialogBody>
 
                                                     <AlertDialogFooter>
-                                                        <Button ref={cancelRef} onClick={onDeclineClose}>
+                                                        <Button ref={cancelRef} onClick={() => { onDeclineClose(); window.location.reload(); }}>
                                                             取消
                                                         </Button>
                                                         <Button colorScheme='red' onClick={() => { handleDecline(); onDeleteDecline(); }} ml={3}>

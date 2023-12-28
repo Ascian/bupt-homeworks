@@ -167,6 +167,8 @@ export default async function DynamicPart({ requestId }) {
         'Cancelled': '已撤消',
         'Expired': '已过期'
     }
+
+    console.log(isDeleteOpen);
     return (
         <>
             {
@@ -203,7 +205,7 @@ export default async function DynamicPart({ requestId }) {
                                                                     </AlertDialogBody>
 
                                                                     <AlertDialogFooter>
-                                                                        <Button ref={cancelRef} onClick={onDeleteClose}>
+                                                                        <Button ref={cancelRef} onClick={() => { onDeleteClose(); window.location.reload(); }}>
                                                                             取消
                                                                         </Button>
                                                                         <Button colorScheme='red' onClick={() => { handleDelete(); onDeleteClose(); }} ml={3}>
