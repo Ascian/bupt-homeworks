@@ -17,6 +17,9 @@ import config from '@/app/config';
 export default async function WelcomeCardPreviewPool() {
     const { data: session } = useSession();
     const [page, setPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(0);
+    const [welcomes, setWelcomes] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch(`${config.serverIp}/offers/mine?page=${page}&pageSize=10`, {

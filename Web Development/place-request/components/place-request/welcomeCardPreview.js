@@ -34,7 +34,7 @@ export default async function WelcomeCardPreview({ welcome }) {
                     setIsLoading(false);
                 }
             })
-    }, [requestId, welcome])
+    }, [welcome])
 
     if (isLoading) {
         return (<>
