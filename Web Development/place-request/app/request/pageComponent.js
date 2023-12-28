@@ -34,7 +34,7 @@ import WelcomeCardPool from '@/components/place-request/welcomeCardPool';
 import ModifyWelcome from "@/components/place-request/modifyWelcome";
 import RequestCard from "@/components/place-request/requestCard";
 
-export default function PageProvider() {
+export default function PageComponent() {
     const cancelRef = useRef();
     const toast = useToast();
     const { data: session, status: sessionStatus } = useSession();

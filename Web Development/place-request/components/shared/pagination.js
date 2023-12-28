@@ -2,18 +2,25 @@
 
 import { Box, Button, Flex, Input, Text, Card } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useToast } from '@chakra-ui/toast';
 
 export default function Pagination({ maxPage }) {
     const [newPage, setNewPage] = useState(1);
 
     const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
     const page = searchParams.get('page') || 1;
 
+
+
     const setPage = (newPage) => {
-        const pathname = window.location.pathname;
-        window.location.href = `${pathname}?page=${newPage}`;
+        let newSearchParams = new URLSearchParams(searchParams);
+
+        newSearchParams.set('page', newPage);
+
+        router.push(`${pathname}?${newSearchParams.toString()}`); 
     }
 
     const toast = useToast();

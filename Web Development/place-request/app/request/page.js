@@ -3,7 +3,7 @@ import {
     Spinner,
 } from '@chakra-ui/react';
 import React, { Suspense } from 'react';
-import PageProvider from './pageProvider';
+import PageComponent from './pageComponent';
 
 export default function Page() {
 
@@ -16,7 +16,7 @@ export default function Page() {
                 color='blue.500'
                 size='xl'
             />}>
-                <PageProvider />
+                <PageComponent />
 
             </Suspense>
         </>
