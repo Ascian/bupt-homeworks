@@ -99,11 +99,13 @@ export default async function DynamicPart({ requestId }) {
             })
         }
 
-        if (sessionStatus === 'authenticated') {
-            fetchData();
-        }        
 
-    }, [requestId, sessionStatus])
+        if (sessionStatus != 'loading') {
+            console.log(sessionStatus);
+            fetchData();
+        }
+
+    }, [sessionStatus, requestId])
 
     // Fetch welcome to know if the request is replied
 
@@ -140,19 +142,6 @@ export default async function DynamicPart({ requestId }) {
             return;
         }
     }
-
-    if (isLoading) {
-        return (
-            <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='blue.500'
-                size='xl'
-            />
-        )
-    }
-
     const statusAlert = {
         'Active': 'info',
         'Accepted': 'success',
@@ -169,9 +158,19 @@ export default async function DynamicPart({ requestId }) {
         'Cancelled': '已撤消',
         'Expired': '已过期'
     }
+    if (isLoading) {
+        return (
+            <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            />
+        )
+    }
 
 
-    console.log(offers);
     return (
         <>
             {
