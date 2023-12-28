@@ -3,16 +3,12 @@
 import {
     Box,
     Spinner,
-    Card,
-    Alert,
-    AlertIcon,
-    AlertTitle,
+
 
 } from '@chakra-ui/react';
 import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import RequestCard from '@/components/place-request/requestCard';
-import WelcomeCardPool from '@/components/place-request/welcomeCardPool';
 import DynamicPart from './dynamicPart';
 
 export default function Page() {

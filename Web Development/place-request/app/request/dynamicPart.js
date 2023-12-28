@@ -22,7 +22,7 @@ import {
 
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useToast } from '@chakra-ui/toast';
 import { useSession } from 'next-auth/react';
 import config from '@/app/config';
@@ -34,71 +34,60 @@ import ModifyWelcome from "@/components/place-request/modifyWelcome";
 export default async function DynamicPart({ requestId }) {
     const { data: session } = useSession();
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
+    const [request, setRequest] = useState({});
+    const [offers, setOffers] = useState([]);
+    const [welcomes, setWelcomes] = useState([]);
+    const [isRequester, setIsRequester] = useState(false);
+    const [isOfferer, setIsOfferer] = useState(false);
+    const [isReplied, setIsReplied] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const cancelRef = useRef();
     const toast = useToast();
 
-    // Fetch request
-    const requestRes = await fetch(`${config.serverIp}/seekers/${requestId}`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const request = await requestRes.json()
-    console.log(request)
-    if (!requestRes.ok || !request) {
-        return (<>
-            <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='blue.500'
-                size='xl'
-            />
-        </>);
-    }
-
-    // Fetch offers by the user
-    const offerRes = await fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${request.seekerId}&page=1&page_size=1`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const offerResponse = await offerRes.json()
-    if (!offerRes.ok || !offerResponse?.data) {
-        return (<>
-            <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='blue.500'
-                size='xl'
-            />
-        </>);
-    }
-    const offers = offerResponse.data
+    useEffect(() => {
+        fetch(`${config.serverIp}/seekers/${requestId}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((request) => {
+                if (request?.seekerId) {
+                    setRequest(request);
+                }
+            });
+        fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${request.seekerId}&page=1&page_size=1`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+            .then((offerResponse) => {
+                if (offerResponse?.data) {
+                    setOffers(offerResponse.data);
+                }
+            });
+        fetch(`${config.serverIp}/offers?seeker_id=${request.seekerId}&page=1&page_size=1`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+            .then((welcomeResponse) => {
+                if (welcomeResponse?.data) {
+                    setWelcomes(welcomeResponse.data);
+                }   
+            });
+        setIsRequester(session?.user?.id === request.userId);
+        setIsOfferer(offers?.length > 0);
+        setIsReplied(welcomes?.length > 0);
+        if (request?.seekerId && offerResponse?.data && welcomeResponse?.data) {
+            setIsLoading(false);
+        }
+    }, [session, requestId])
 
     // Fetch welcome to know if the request is replied
-    const welcomeRes = await fetch(`${config.serverIp}/offers?seeker_id=${request.seekerId}&page=1&page_size=1`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const welcomeResponse = await welcomeRes.json()
-    if (!welcomeRes.ok || !welcomeResponse?.data) {
-        return (<>
-            <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='blue.500'
-                size='xl'
-            />
-        </>);
-    }
-    const welcomes = welcomeResponse.data
 
     const handleDelete = async () => {
         const res = await fetch(`${config.serverIp}/seekers/${requestId}`, {
@@ -134,9 +123,6 @@ export default async function DynamicPart({ requestId }) {
         }
     }
 
-    const isRequester = session?.user?.id === request.userId;
-    const isOfferer = offers.length > 0;
-    const isReplied = welcomes.length > 0;
 
     const statusAlert = {
         'Active': 'info',
@@ -153,6 +139,18 @@ export default async function DynamicPart({ requestId }) {
         'Declined': '已拒绝',
         'Cancelled': '已撤消',
         'Expired': '已过期'
+    }
+
+    if (isLoading) {
+        return (
+            <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            />
+        )
     }
     return (
         <>

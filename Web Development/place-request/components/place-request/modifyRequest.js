@@ -25,7 +25,7 @@ import {
     NumberInputField,
 
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useToast } from '@chakra-ui/toast';
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { useSession } from 'next-auth/react';
@@ -33,6 +33,9 @@ import config from '@/app/config';
 
 export default async function ModifyRequest({ requestId }) {
     const { data: session } = useSession();
+    const [request, setRequest] = useState({});
+    const [requestSeekerExpiryDate, setRequestSeekerExpiryDate] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
     const toast = useToast()
 
     const [title, setTitle] = useState('');
@@ -46,14 +49,23 @@ export default async function ModifyRequest({ requestId }) {
     const [isMaxExpectedPriceInvalid, setIsMaxExpectedPriceInvalid] = useState(false);
     const [isSeekerExpiryDateInvalid, setIsSeekerExpiryDateInvalid] = useState(false);
 
-    const res = await fetch(`${config.serverIp}/seekers/${requestId}`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    const request = await res.json();
-    if (!res.ok || !request) {
+    useEffect(() => {
+        fetch(`${config.serverIp}/seekers/${requestId}`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+            .then((request) => {
+                if (request) {
+                    setRequest(request);
+                    setRequestSeekerExpiryDate(new Date(request.seekerExpiryDate).toISOString().split('T')[0]);
+                    setIsLoading(false);
+                }
+            })
+    }, [requestId])
+
+    if (isLoading) {
         return (<>
             <Spinner
                 thickness='4px'
@@ -64,8 +76,6 @@ export default async function ModifyRequest({ requestId }) {
             />
         </>);
     }
-
-    const requestSeekerExpiryDate = new Date(request.seekerExpiryDate).toISOString().split('T')[0];
 
     const handleSubmit = async () => {
         if (title === '' || title.length > 20) {

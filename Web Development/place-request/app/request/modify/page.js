@@ -1,4 +1,5 @@
 'use client'
+
 import {
     Spinner,
 } from '@chakra-ui/react';
