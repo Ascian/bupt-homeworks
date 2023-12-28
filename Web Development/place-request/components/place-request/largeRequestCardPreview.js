@@ -1,3 +1,5 @@
+'use client'
+
 import {
     Card,
     CardBody,
@@ -9,7 +11,7 @@ import {
     Link,
 } from "@chakra-ui/react";
 
-export default async function LargeRequestCardPreview({ request }) {
+export default function LargeRequestCardPreview({ request }) {
     const date = new Date(request.updateTime);
     const updateTime = date.toLocaleDateString()
 

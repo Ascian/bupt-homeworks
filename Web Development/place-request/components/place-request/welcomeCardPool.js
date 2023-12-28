@@ -15,10 +15,11 @@ import { useEffect, useState } from 'react';
 import config from '@/app/config'
 import Pagination from '@/components/shared/pagination'
 import WelcomeCard from "./welcomeCard";
+import { useSearchParams } from "next/navigation";
 
 
-export default function WelcomeCardPool({ requestId, isRequester, isRequestActive }) {
-    const [page, setPage] = useState(1);
+export default function WelcomeCardPool({ requestId, showButton }) {
+    const page = useSearchParams().get('page') || 1;
     const [maxPage, setMaxPage] = useState(0);
     const [welcomes, setWelcomes] = useState([]);
     const [acceptWelcomes, setAcceptWelcomes] = useState([]);
@@ -28,7 +29,6 @@ export default function WelcomeCardPool({ requestId, isRequester, isRequestActiv
     useEffect(() => {
         let isWelcomeOk = true;
         let isAcceptWelcomeOk = true;
-
 
         Promise.all([
             fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
@@ -93,25 +93,20 @@ export default function WelcomeCardPool({ requestId, isRequester, isRequestActiv
                             <>
                                 {acceptWelcomes.map((welcome) => (
                                     <>
-                                        <WelcomeCard welcome={welcome} isRequester={isRequester} isRequestActive={isRequestActive} isWelcomeAccepted={true} />
+                                        <WelcomeCard welcome={welcome} showButton={false} isWelcomeAccepted={true} />
                                         <Divider orientation='horizontal' w='750px' />
                                     </>
                                 ))}
                                 {welcomes.map((welcome) => (
                                     <>
-                                        <WelcomeCard welcome={welcome} isRequester={isRequester} isRequestActive={isRequestActive} isWelcomeAccepted={false} />
+                                        <WelcomeCard welcome={welcome} showButton={showButton} isWelcomeAccepted={false} />
                             <Divider orientation='horizontal' w='750px' />
                         </>
                     ))}
 
-
-                    <Box h='10' />
-                    <Card bg="transparent" boxShadow="none" align='center' justify='center'>
-                        <Text align='center' fontSize='lg'>第 {page} 页</Text>
-                    </Card>
                     <Box h='6' />
 
-                    <Pagination setPage={setPage} page={page} maxPage={maxPage} />
+                                <Pagination maxPage={maxPage} />
                         </>
                     )}
                 </CardBody>

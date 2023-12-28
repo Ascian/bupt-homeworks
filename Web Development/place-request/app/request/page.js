@@ -1,19 +1,11 @@
-'use client'
 
 import {
-    Box,
     Spinner,
-
-
 } from '@chakra-ui/react';
 import React, { Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
-import RequestCard from '@/components/place-request/requestCard';
-import DynamicPart from './dynamicPart';
+import PageProvider from './pageProvider';
 
 export default function Page() {
-    const searchParams = useSearchParams();
-    const requestId = searchParams.get('request_id');
 
     return (
         <>
@@ -24,11 +16,7 @@ export default function Page() {
                 color='blue.500'
                 size='xl'
             />}>
-                <RequestCard requestId={requestId} />
-
-                <Box h='10' />
-
-                <DynamicPart requestId={requestId} />
+                <PageProvider />
 
             </Suspense>
         </>

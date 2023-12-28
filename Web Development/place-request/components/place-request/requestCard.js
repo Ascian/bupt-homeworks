@@ -10,42 +10,9 @@ import {
     Flex,
     Spinner,
 } from '@chakra-ui/react';
-import config from '@/app/config'
-import { useEffect, useState } from 'react';
 
-export default function RequestCard({ requestId }) {
-    const [request, setRequest] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
-
+export default function RequestCard({ request }) {
     const updateTime = new Date(request?.updateTime).toLocaleDateString();
-
-
-    useEffect(() => {
-        fetch(`${config.serverIp}/seekers/${requestId}`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res.json())
-            .then((request) => {
-                if (request?.seekerId) {
-                    setRequest(request);
-                    setIsLoading(false);
-                }
-            })
-    }, [requestId])
-
-    if (isLoading) {
-        return (<>
-            <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='blue.500'
-                size='xl'
-            />
-        </>);
-    }
 
     return (
         <>

@@ -1,48 +1,25 @@
-'use client'
-
 import {
-    Box,
     Card,
-    Text,
     Spinner,
     Alert,
     AlertIcon,
     AlertTitle,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { auth } from '@/lib/auth';
 import LargeRequestCardPreviewPool from '@/components/place-request/largeRequestCardPreviewPool';
 import Pagination from '@/components/shared/pagination';
 import config from '@/app/config';
 
-export default function Home() {
-    const [page, setPage] = useState(1);
-    const [maxPage, setMaxPage] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-    const { data: session, status } = useSession();
-
-    useEffect(() => {
-        let isFetched = false;
-
-        if (status != 'loading' && !isFetched) {
-        fetch(`${config.serverIp}/seekers${session ? `?user_region=${session.user.city}` : ''}`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((response) => {
-                if (response?.pageNum != undefined || response?.pageNum != null) {
-                    setMaxPage(response.pageNum);
-                    setIsLoading(false);
-                    isFetched = true;
-                }
-            })
-        }
-    }, [status])
-
-    if (isLoading) {
+export default async function Home() {
+    const session = await auth();
+    const res = await fetch(`${config.serverIp}/seekers?page_size=1${session ? `&user_region=${session.user.city}` : ''}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    const response = await res.json();
+    if (response?.pageNum == undefined || response?.pageNum == null) {
         return (<>
             <Spinner
                 thickness='4px'
@@ -53,6 +30,7 @@ export default function Home() {
             />
         </>);
     }
+    const maxPage = response.pageNum;
 
     return (
         <>
@@ -65,15 +43,9 @@ export default function Home() {
                 </Card>
             ) : (
                 <>
-            <LargeRequestCardPreviewPool page={page} />
+                        <LargeRequestCardPreviewPool />
 
-            <Box h='10' />
-            <Card bg="transparent" boxShadow="none" align='center' justify='center'>
-                <Text align='center' fontSize='lg'>第 {page} 页</Text>
-            </Card>
-            <Box h='6' />
-
-            <Pagination setPage={setPage} page={page} maxPage={maxPage} />
+                        <Pagination maxPage={maxPage} />
                 </>
             )}
         </>

@@ -25,21 +25,26 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import { useRef, useEffect, useState } from 'react';
 import { useToast } from '@chakra-ui/toast';
 import { useSession } from 'next-auth/react';
+import { useSearchParams } from "next/navigation";
+
 import config from '@/app/config';
 import CreateWelcome from '@/components/place-request/createWelcome';
 import WelcomeCard from '@/components/place-request/welcomeCard';
 import WelcomeCardPool from '@/components/place-request/welcomeCardPool';
 import ModifyWelcome from "@/components/place-request/modifyWelcome";
+import RequestCard from "@/components/place-request/requestCard";
 
-export default function DynamicPart({ requestId }) {
+export default function PageProvider() {
+    const cancelRef = useRef();
+    const toast = useToast();
     const { data: session, status: sessionStatus } = useSession();
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
+
+    const requestId = useSearchParams().get('request_id');
     const [request, setRequest] = useState({});
     const [offers, setOffers] = useState([]);
     const [welcomes, setWelcomes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const cancelRef = useRef();
-    const toast = useToast();
 
     const isRequester = session?.user?.id === request.userId;
     const isOfferer = offers?.length > 0;
@@ -163,8 +168,13 @@ export default function DynamicPart({ requestId }) {
         )
     }
 
+    console.log(request)
+
     return (
         <>
+            <RequestCard request={request} />
+
+            <Box h='10' />
             {
                 session ? (
                     <>
@@ -255,7 +265,13 @@ export default function DynamicPart({ requestId }) {
                                                 </CardBody >
                                             </Card >
                                         ) : (
-                                            <CreateWelcome requestId={requestId} userId={session.user.userId} />
+                                            <>
+                                                {request.status === 'Active' ? (
+                                                    <CreateWelcome requestId={requestId} />
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </>
                                         )}
                                 </>
                             )
@@ -263,17 +279,23 @@ export default function DynamicPart({ requestId }) {
 
                     </>
                 ) : (
-                    <Card align='left' w='800px'>
-                        <Alert status='error'>
-                            <AlertIcon />
-                            <AlertTitle>登录后可回复</AlertTitle>
-                        </Alert >
-                    </Card >
+                    <>
+                        {request.status === 'Active' ? (
+                            <Card align='left' w='800px'>
+                                <Alert status='error'>
+                                    <AlertIcon />
+                                    <AlertTitle>登录后可回复</AlertTitle>
+                                </Alert >
+                            </Card >
+                        ) : (
+                            <></>
+                        )}
+                    </>
                 )
             }
 
             <Box h='10' />
-            <WelcomeCardPool requestId={requestId} isRequester={isRequester} isRequestActive={request.status === 'Active'} />
+            <WelcomeCardPool requestId={requestId} showButton={isRequester && request.status === 'Active'} />
 
         </>
     );

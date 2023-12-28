@@ -10,28 +10,28 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import config from "@/app/config";
 import LargeRequestCardPreview from "./largeRequestCardPreview";
+import { useSearchParams } from "next/navigation";
 
-export default function LargeRequestCardPreviewPool({ page }) {
+export default function LargeRequestCardPreviewPool() {
     const { data: session, status } = useSession();
+    const page = useSearchParams().get('page') || 1;
     const [requests, setRequests] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         let isFetched = false;
+
         if (status != 'loading' && !isFetched) {
-        fetch(`${config.serverIp}/seekers?page=${page}&page_size=10${session ? `&user_region=${session.user.city}` : ''}&status_list=Active`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res.json())
-            .then((response) => {
-                if (response?.data != undefined || response?.data != null) {
-                    setRequests(response.data);
-                    setIsLoading(false);
-                    isFetched = true;
+            fetch(`${config.serverIp}/seekers?page=${page}&page_size=10${session ? `&user_region=${session.user.city}` : ''}&status_list=Active`, {
+                method: 'GET',
+            }).then((res) => res.json())
+                .then((response) => {
+                    if (response?.data != undefined || response?.data != null) {
+                        setRequests(response.data);
+                        setIsLoading(false);
+                        isFetched = true;
+                    }
                 }
-            }
             )
         }
     }, [status])

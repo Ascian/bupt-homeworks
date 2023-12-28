@@ -10,13 +10,14 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import Pagination from "../shared/pagination";
 import WelcomeCardPreview from './welcomeCardPreview';
 import config from '@/app/config';
 
 export default function WelcomeCardPreviewPool() {
     const { data: session, status } = useSession();
-    const [page, setPage] = useState(1);
+    const page = useSearchParams().get('page') || 1;
     const [maxPage, setMaxPage] = useState(0);
     const [welcomes, setWelcomes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -27,16 +28,36 @@ export default function WelcomeCardPreviewPool() {
         fetch(`${config.serverIp}/offers/mine?page=${page}&pageSize=10`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${session.accessToken}`
             },
         }).then((res) => res.json())
             .then((response) => {
+                let data = null;
                 if (response?.pageNum != undefined || response?.pageNum != null) {
                     setMaxPage(response.pageNum);
-                    setWelcomes(response.data);
+                    data = response.data;
                     setIsLoading(false);
                 }
+                Promise.all(data.map((welcome) =>
+                    fetch(`${config.serverIp}/seekers/${welcome.seekerId}`, {
+                        method: 'GET',
+
+                    })
+                        .then(res => res.json())
+                        .then(request => {
+                            if (request?.seekerId) {
+                                return { ...welcome, requestTitle: request.seekerTitle };
+                            } else {
+                                return welcome;
+                            }
+                        })
+                        .catch(() => {
+                            return welcome;
+                        })
+                )).then(welcomes => {
+                    setWelcomes(welcomes);
+                    setIsLoading(false); // 所有请求完成后再改变加载状态
+                }); 
             })
         }
     }, [status, page])
@@ -74,7 +95,7 @@ export default function WelcomeCardPreviewPool() {
                         ))
                     }
                     < Box h='10' />
-                    <Pagination page={page} setPage={setPage} maxPage={maxPage} />
+                        <Pagination maxPage={maxPage} />
                 </>
             )}
         </>

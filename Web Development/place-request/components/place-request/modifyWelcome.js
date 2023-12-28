@@ -26,6 +26,7 @@ import config from '@/app/config'
 
 export default function ModifyWelcome({ welcome }) {
     const [description, setDescription] = useState('');
+    const [isDescriptionInvalid, setIsDescriptionInvalid] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
     const { data: session } = useSession();

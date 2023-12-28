@@ -7,45 +7,13 @@ import {
     Divider,
     Flex,
     Box,
-    Spinner,
     Link,
     Heading,
 
 } from "@chakra-ui/react";
-import config from '@/app/config'
-import { useEffect, useState } from "react";
 
 export default function WelcomeCardPreview({ welcome }) {
-    const [request, setRequest] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
-
-    const updateTime = new Date(request?.updateTime).toLocaleDateString();
-    useEffect(() => {
-        fetch(`${config.serverIp}/seekers/${welcome.seekerId}`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res.json())
-            .then((request) => {
-                if (request?.seekerId) {
-                    setRequest(request);
-                    setIsLoading(false);
-                }
-            })
-    }, [welcome])
-
-    if (isLoading) {
-        return (<>
-            <Spinner
-                thickness='4px'
-                speed='0.65s'
-                emptyColor='gray.200'
-                color='blue.500'
-                size='xl'
-            />
-        </>);
-    }
+    const updateTime = new Date(welcome.updateTime).toLocaleDateString();
 
     const statusColor = {
         'Active': 'green',
@@ -70,7 +38,7 @@ export default function WelcomeCardPreview({ welcome }) {
             }} >
             <Card w='750px' h='auto'>
                 <CardBody>
-                    <Heading fontSize='lg' maxW='700px' noOfLines={[1]}  >{request.seekerTitle}</Heading>
+                    <Heading fontSize='lg' maxW='700px' noOfLines={[1]}  >{welcome.requestTitle}</Heading>
                     <Divider orientation='horizontal' w='700px' />
                     <Box h='2' />
                     <Flex justify="flex-start" align='center' w='700px' >

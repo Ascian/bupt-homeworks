@@ -28,10 +28,13 @@ import { useEffect, useState } from 'react';
 import { useToast } from '@chakra-ui/toast';
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import config from '@/app/config';
 
-export default function ModifyRequest({ requestId }) {
+export default function ModifyRequest() {
     const { data: session } = useSession();
+    const searchParams = useSearchParams();
+    const requestId = searchParams.get('request_id');
     const [request, setRequest] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const toast = useToast()

@@ -25,7 +25,7 @@ import { useRef } from "react";
 import { useSession } from "next-auth/react";
 import config from "@/app/config";
 
-export default function WelcomeCard({ welcome, isRequester, isRequestActive, isWelcomeAccepted }) {
+export default function WelcomeCard({ welcome, showButton, isWelcomeAccepted }) {
     const date = new Date(welcome.updateTime).toLocaleDateString()
     const { isOpen: isAcceptOpen, onOpen: onAcceptOpen, onClose: onAcceptClose } = useDisclosure()
     const { isOpen: isDeclineOpen, onOpen: onDeclineOpen, onClose: onDeclineClose } = useDisclosure()
@@ -94,15 +94,15 @@ export default function WelcomeCard({ welcome, isRequester, isRequestActive, isW
                     <Flex w='700px' >
                         <Image borderRadius="full" boxSize="40px" src="/userIcon.png" alt="User Icon" />
                         <Box w="4" />
-                        {isRequester && isRequestActive ? (
+                        <Flex w='600px' justify='flex-start' align='center' >
+                            <Stack >
+                                <Heading fontSize='md' >{welcome.username}</Heading>
+                                <Text fontSize='md' >{welcome.offerDescription}</Text>
+                                <Text fontSize='sm' color='grey' >{date}</Text>
+                            </Stack>
+                        </Flex>
+                        {showButton ? (
                             <>
-                                <Flex w='600px' justify='flex-start' align='center' >
-                                    <Stack >
-                                        <Heading fontSize='md' >{welcome.username}</Heading>
-                                        <Text fontSize='md' >{welcome.offerDescription}</Text>
-                                        <Text fontSize='sm' color='grey' >{date}</Text>
-                                    </Stack>
-                                </Flex>
                                 <Flex w='100px' justify='flex-end' align='center' >
                                     <Stack>
                                         <Button colorScheme='facebook' onClick={onAcceptOpen} >
@@ -167,14 +167,7 @@ export default function WelcomeCard({ welcome, isRequester, isRequestActive, isW
                                 </Flex>
                             </>
                         ) : (
-                            <>
-                                <Flex w='600px' justify='flex-start' align='center' >
-                                    <Stack >
-                                            <Heading fontSize='md' >{welcome.username}</Heading>
-                                            <Text fontSize='md' >{welcome.offerDescription}</Text>
-                                            <Text fontSize='sm' color='grey' >{date}</Text>
-                                        </Stack>
-                                </Flex>
+                                <>
                                 {isWelcomeAccepted ? (
                                     <Flex w='100px' justify='flex-end' align='center' >
                                         <Text fontSize='lg' color='green' >已接受</Text>
