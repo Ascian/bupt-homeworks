@@ -32,7 +32,7 @@ import WelcomeCardPool from '@/components/place-request/welcomeCardPool';
 import ModifyWelcome from "@/components/place-request/modifyWelcome";
 
 export default async function DynamicPart({ requestId }) {
-    const { data: session } = useSession();
+    const { data: session, status: sessionStatus } = useSession();
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
     const [request, setRequest] = useState({});
     const [offers, setOffers] = useState([]);
@@ -98,9 +98,12 @@ export default async function DynamicPart({ requestId }) {
                 }
             })
         }
-        fetchData();
 
-    }, [session, requestId])
+        if (sessionStatus === 'authenticated') {
+            fetchData();
+        }        
+
+    }, [requestId, sessionStatus])
 
     // Fetch welcome to know if the request is replied
 
