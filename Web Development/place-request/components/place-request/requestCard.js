@@ -13,10 +13,11 @@ import {
 import config from '@/app/config'
 import { useEffect, useState } from 'react';
 
-export default async function RequestCard({ requestId }) {
+export default function RequestCard({ requestId }) {
     const [request, setRequest] = useState({});
-    const [updateTime, setUpdateTime] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+
+    const updateTime = new Date(request?.updateTime).toLocaleDateString();
 
 
     useEffect(() => {
@@ -27,9 +28,8 @@ export default async function RequestCard({ requestId }) {
             },
         }).then((res) => res.json())
             .then((request) => {
-                if (request) {
+                if (request?.seekerId) {
                     setRequest(request);
-                    setUpdateTime(new Date(request.updateTime).toLocaleDateString());
                     setIsLoading(false);
                 }
             })

@@ -31,18 +31,19 @@ import WelcomeCard from '@/components/place-request/welcomeCard';
 import WelcomeCardPool from '@/components/place-request/welcomeCardPool';
 import ModifyWelcome from "@/components/place-request/modifyWelcome";
 
-export default async function DynamicPart({ requestId }) {
+export default function DynamicPart({ requestId }) {
     const { data: session, status: sessionStatus } = useSession();
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
     const [request, setRequest] = useState({});
     const [offers, setOffers] = useState([]);
     const [welcomes, setWelcomes] = useState([]);
-    const [isRequester, setIsRequester] = useState(false);
-    const [isOfferer, setIsOfferer] = useState(false);
-    const [isReplied, setIsReplied] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const cancelRef = useRef();
     const toast = useToast();
+
+    const isRequester = session?.user?.id === request.userId;
+    const isOfferer = offers?.length > 0;
+    const isReplied = welcomes?.length > 0;
 
     useEffect(() => {
         async function fetchData() {
@@ -60,7 +61,6 @@ export default async function DynamicPart({ requestId }) {
                     .then((request) => {
                         if (request?.seekerId) {
                             setRequest(request);
-                            setIsRequester(session?.user?.id === request.userId);
                             isRequestOk = true;
                         }
                     }),
@@ -74,7 +74,6 @@ export default async function DynamicPart({ requestId }) {
                     .then((offerResponse) => {
                         if (offerResponse?.data != null || offerResponse?.data != undefined) {
                             setOffers(offerResponse.data);
-                            setIsOfferer(offers?.length > 0);
                             isOfferOk = true;
                         }
                     }),
@@ -86,22 +85,21 @@ export default async function DynamicPart({ requestId }) {
                     },
                 }).then((res) => res.json())
                     .then((welcomeResponse) => {
-                        if (welcomeResponse?.data) {
+                        if (welcomeResponse?.data != null || welcomeResponse?.data != undefined) {
                             setWelcomes(welcomeResponse.data);
-                            setIsReplied(welcomes?.length > 0);
                             isWelcomeOk = true;
                         }
                     })
             ]).then(() => {
                 if (isRequestOk && isOfferOk && isWelcomeOk) {
                     setIsLoading(false);
+                    isFetched = true;
                 }
             })
         }
 
-
-        if (sessionStatus != 'loading') {
-            console.log(sessionStatus);
+        let isFetched = false;
+        if (sessionStatus != 'loading' && !isFetched) {
             fetchData();
         }
 
@@ -120,12 +118,7 @@ export default async function DynamicPart({ requestId }) {
 
         // If no error and we have user data, return it
         if (res.ok) {
-            toast({
-                title: '删除成功',
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
+
             window.location.reload();
             return;
         }
@@ -169,7 +162,6 @@ export default async function DynamicPart({ requestId }) {
             />
         )
     }
-
 
     return (
         <>

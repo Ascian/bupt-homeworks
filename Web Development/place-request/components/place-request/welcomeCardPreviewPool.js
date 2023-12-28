@@ -14,14 +14,16 @@ import Pagination from "../shared/pagination";
 import WelcomeCardPreview from './welcomeCardPreview';
 import config from '@/app/config';
 
-export default async function WelcomeCardPreviewPool() {
-    const { data: session } = useSession();
+export default function WelcomeCardPreviewPool() {
+    const { data: session, status } = useSession();
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
     const [welcomes, setWelcomes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let isFetched = false;
+        if (status != 'loading' && !isFetched) {
         fetch(`${config.serverIp}/offers/mine?page=${page}&pageSize=10`, {
             method: 'GET',
             headers: {
@@ -30,13 +32,14 @@ export default async function WelcomeCardPreviewPool() {
             },
         }).then((res) => res.json())
             .then((response) => {
-                if (response?.pageNum) {
+                if (response?.pageNum != undefined || response?.pageNum != null) {
                     setMaxPage(response.pageNum);
                     setWelcomes(response.data);
                     setIsLoading(false);
                 }
             })
-    }, [session, page])
+        }
+    }, [status, page])
 
 
     if (isLoading) {

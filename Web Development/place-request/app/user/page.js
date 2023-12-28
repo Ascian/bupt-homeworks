@@ -86,12 +86,7 @@ export default function Page() {
                     introduction: user.bio,
                 }
             })
-            toast({
-                title: '修改成功',
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
+
             window.location.reload();
             return;
         }

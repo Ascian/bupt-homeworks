@@ -13,7 +13,7 @@ import {
 
 } from "@chakra-ui/react";
 
-export default async function RequestCardPreview({ request }) {
+export default function RequestCardPreview({ request }) {
 
     const updateTime = new Date(request.updateTime).toLocaleDateString();
     const seekerExpiryDate = new Date(request.seekerExpiryDate).toLocaleDateString();

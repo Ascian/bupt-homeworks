@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import config from '@/app/config'
 
-export default async function CreateWelcome({ requestId }) {
+export default function CreateWelcome({ requestId }) {
     const [description, setDescription] = useState('');
     const { data: session } = useSession();
     const toast = useToast()

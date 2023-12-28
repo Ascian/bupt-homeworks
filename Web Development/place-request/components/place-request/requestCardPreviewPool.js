@@ -14,14 +14,16 @@ import Pagination from "../shared/pagination";
 import RequestCardPreview from './requestCardPreview';
 import config from '@/app/config';
 
-export default async function RequestCardPreviewPool() {
-    const { data: session } = useSession();
+export default function RequestCardPreviewPool() {
+    const { data: session, status } = useSession();
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
     const [requests, setRequests] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let isFetched = false;
+        if (status != 'loading' && !isFetched) {
         fetch(`${config.serverIp}/seekers/mine?page=${page}&pageSize=10`, {
             method: 'GET',
             headers: {
@@ -30,13 +32,15 @@ export default async function RequestCardPreviewPool() {
             },
         }).then((res) => res.json())
             .then((response) => {
-                if (response?.pageNum) {
+                if (response?.pageNum != undefined || response?.pageNum != null) {
                     setMaxPage(response.pageNum);
                     setRequests(response.data);
                     setIsLoading(false);
+                    isFetched = true;
                 }
             })
-    }, [session, page])
+        }
+    }, [status, page])
 
     if (isLoading) {
         return (<>

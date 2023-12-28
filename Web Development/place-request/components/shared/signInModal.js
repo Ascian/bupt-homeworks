@@ -66,6 +66,7 @@ export function SignInModal({
             })
         } else {
             setShowSignInModal(false);
+            window.location.reload();
         }
     };
 

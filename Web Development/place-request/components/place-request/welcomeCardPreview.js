@@ -15,11 +15,11 @@ import {
 import config from '@/app/config'
 import { useEffect, useState } from "react";
 
-export default async function WelcomeCardPreview({ welcome }) {
+export default function WelcomeCardPreview({ welcome }) {
     const [request, setRequest] = useState({});
-    const [updateTime, setUpdateTime] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
+    const updateTime = new Date(request?.updateTime).toLocaleDateString();
     useEffect(() => {
         fetch(`${config.serverIp}/seekers/${welcome.seekerId}`, {
             method: 'GET',
@@ -28,9 +28,8 @@ export default async function WelcomeCardPreview({ welcome }) {
             },
         }).then((res) => res.json())
             .then((request) => {
-                if (request) {
+                if (request?.seekerId) {
                     setRequest(request);
-                    setUpdateTime(new Date(request.updateTime).toLocaleDateString());
                     setIsLoading(false);
                 }
             })

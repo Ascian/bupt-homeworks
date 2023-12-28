@@ -24,7 +24,7 @@ import { useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import config from '@/app/config'
 
-export default async function ModifyWelcome({ welcome }) {
+export default function ModifyWelcome({ welcome }) {
     const [description, setDescription] = useState('');
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef()
@@ -153,7 +153,7 @@ export default async function ModifyWelcome({ welcome }) {
                                     </AlertDialogBody>
 
                                     <AlertDialogFooter>
-                                        <Button ref={cancelRef} onClick={onClose}>
+                                        <Button ref={cancelRef} onClick={() => { onClose(); window.location.reload(); }}>
                                             取消
                                         </Button>
                                         <Button colorScheme='red' onClick={() => { handleDelete(); onClose(); }} ml={3}>

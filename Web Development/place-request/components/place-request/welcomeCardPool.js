@@ -17,7 +17,7 @@ import Pagination from '@/components/shared/pagination'
 import WelcomeCard from "./welcomeCard";
 
 
-export default async function WelcomeCardPool({ requestId, isRequester, isRequestActive }) {
+export default function WelcomeCardPool({ requestId, isRequester, isRequestActive }) {
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
     const [welcomes, setWelcomes] = useState([]);
@@ -29,6 +29,7 @@ export default async function WelcomeCardPool({ requestId, isRequester, isReques
         let isWelcomeOk = true;
         let isAcceptWelcomeOk = true;
 
+
         Promise.all([
             fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
                 method: 'GET',
@@ -37,7 +38,7 @@ export default async function WelcomeCardPool({ requestId, isRequester, isReques
                 },
             }).then((res) => res.json())
                 .then((response) => {
-                    if (response?.pageNum) {
+                    if (response?.pageNum != undefined || response?.pageNum != null) {
                         setMaxPage(response.pageNum);
                         setWelcomes(response.data);
                         isWelcomeOk = true;
@@ -50,7 +51,7 @@ export default async function WelcomeCardPool({ requestId, isRequester, isReques
                 },
             }).then((res) => res.json())
                 .then((response) => {
-                    if (response?.pageNum) {
+                    if (response?.pageNum != undefined || response?.pageNum != null) {
                         setAcceptWelcomes(response.data);
                         isAcceptWelcomeOk = true;
                     }

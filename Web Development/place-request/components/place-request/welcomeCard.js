@@ -43,12 +43,7 @@ export default function WelcomeCard({ welcome, isRequester, isRequestActive, isW
             },
         })
         if (res.ok) {
-            toast({
-                title: '接受成功',
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
+
             window.location.reload();
             return;
         }
@@ -75,12 +70,7 @@ export default function WelcomeCard({ welcome, isRequester, isRequestActive, isW
             },
         })
         if (res.ok) {
-            toast({
-                title: '拒绝成功',
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-            })
+
             window.location.reload();
             return;
         }

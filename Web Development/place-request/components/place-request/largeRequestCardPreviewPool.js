@@ -11,12 +11,14 @@ import { useEffect, useState } from "react";
 import config from "@/app/config";
 import LargeRequestCardPreview from "./largeRequestCardPreview";
 
-export default async function LargeRequestCardPreviewPool({ page }) {
-    const { data: session } = useSession();
+export default function LargeRequestCardPreviewPool({ page }) {
+    const { data: session, status } = useSession();
     const [requests, setRequests] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let isFetched = false;
+        if (status != 'loading' && !isFetched) {
         fetch(`${config.serverIp}/seekers?page=${page}&page_size=10${session ? `&user_region=${session.user.city}` : ''}&status_list=Active`, {
             method: 'GET',
             headers: {
@@ -24,13 +26,15 @@ export default async function LargeRequestCardPreviewPool({ page }) {
             },
         }).then((res) => res.json())
             .then((response) => {
-                if (response?.data) {
+                if (response?.data != undefined || response?.data != null) {
                     setRequests(response.data);
                     setIsLoading(false);
+                    isFetched = true;
                 }
             }
             )
-    }, [session, page])
+        }
+    }, [status])
 
     if (isLoading) {
         return (<>

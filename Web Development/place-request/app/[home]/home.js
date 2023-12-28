@@ -15,13 +15,16 @@ import LargeRequestCardPreviewPool from '@/components/place-request/largeRequest
 import Pagination from '@/components/shared/pagination';
 import config from '@/app/config';
 
-export default async function Home() {
+export default function Home() {
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
     useEffect(() => {
+        let isFetched = false;
+
+        if (status != 'loading' && !isFetched) {
         fetch(`${config.serverIp}/seekers${session ? `?user_region=${session.user.city}` : ''}`, {
             method: 'GET',
             headers: {
@@ -30,12 +33,14 @@ export default async function Home() {
         })
             .then((res) => res.json())
             .then((response) => {
-                if (response?.pageNum) {
+                if (response?.pageNum != undefined || response?.pageNum != null) {
                     setMaxPage(response.pageNum);
                     setIsLoading(false);
+                    isFetched = true;
                 }
             })
-    }, [session])
+        }
+    }, [status])
 
     if (isLoading) {
         return (<>

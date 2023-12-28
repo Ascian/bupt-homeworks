@@ -30,10 +30,9 @@ import { ChevronDownIcon } from '@chakra-ui/icons'
 import { useSession } from 'next-auth/react';
 import config from '@/app/config';
 
-export default async function ModifyRequest({ requestId }) {
+export default function ModifyRequest({ requestId }) {
     const { data: session } = useSession();
     const [request, setRequest] = useState({});
-    const [requestSeekerExpiryDate, setRequestSeekerExpiryDate] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const toast = useToast()
 
@@ -48,6 +47,8 @@ export default async function ModifyRequest({ requestId }) {
     const [isMaxExpectedPriceInvalid, setIsMaxExpectedPriceInvalid] = useState(false);
     const [isSeekerExpiryDateInvalid, setIsSeekerExpiryDateInvalid] = useState(false);
 
+    const requestSeekerExpiryDate = new Date(request?.seekerExpiryDate).toISOString().split('T')[0];
+
     useEffect(() => {
         fetch(`${config.serverIp}/seekers/${requestId}`, {
             method: 'GET',
@@ -56,9 +57,8 @@ export default async function ModifyRequest({ requestId }) {
             },
         }).then((res) => res.json())
             .then((request) => {
-                if (request) {
+                if (request?.seekerId) {
                     setRequest(request);
-                    setRequestSeekerExpiryDate(new Date(request.seekerExpiryDate).toISOString().split('T')[0]);
                     setIsLoading(false);
                 }
             })
