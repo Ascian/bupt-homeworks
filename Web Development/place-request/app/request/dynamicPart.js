@@ -52,51 +52,51 @@ export default async function DynamicPart({ requestId }) {
 
             Promise.all([
                 fetch(`${config.serverIp}/seekers/${requestId}`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).then((res) => res.json())
-                .then((request) => {
-                    if (request?.seekerId) {
-                        setRequest(request);
-                        isRequestOk = true;
-                    }
-                }),
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }).then((res) => res.json())
+                    .then((request) => {
+                        if (request?.seekerId) {
+                            setRequest(request);
+                            isRequestOk = true;
+                        }
+                    }),
 
                 fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${requestId}&page=1&page_size=1`, {
-                        method: 'GET',
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    }).then((res) => res.json())
-                        .then((offerResponse) => {
-                            if (offerResponse?.data) {
-                                setOffers(offerResponse.data);
-                                isOfferOk = true;
-                            }
-                        }),
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }).then((res) => res.json())
+                    .then((offerResponse) => {
+                        if (offerResponse?.data) {
+                            setOffers(offerResponse.data);
+                            isOfferOk = true;
+                        }
+                    }),
+
                 fetch(`${config.serverIp}/offers?seeker_id=${requestId}&page=1&page_size=1`, {
-                        method: 'GET',
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    }).then((res) => res.json())
-                        .then((welcomeResponse) => {
-                            if (welcomeResponse?.data) {
-                                setWelcomes(welcomeResponse.data);
-                                isWelcomeOk = true;
-                            }   
-                        })
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }).then((res) => res.json())
+                    .then((welcomeResponse) => {
+                        if (welcomeResponse?.data) {
+                            setWelcomes(welcomeResponse.data);
+                            isWelcomeOk = true;
+                        }
+                    })
             ]).then(() => {
+                setIsRequester(session?.user?.id === request.userId);
+                setIsOfferer(offers?.length > 0);
+                setIsReplied(welcomes?.length > 0);
 
-        setIsRequester(session?.user?.id === request.userId);
-        setIsOfferer(offers?.length > 0);
-        setIsReplied(welcomes?.length > 0);
-
-        if (isRequestOk && isOfferOk && isWelcomeOk) {
-            setIsLoading(false);
-        }
+                if (isRequestOk && isOfferOk && isWelcomeOk) {
+                    setIsLoading(false);
+                }
             })
         }
         fetchData();

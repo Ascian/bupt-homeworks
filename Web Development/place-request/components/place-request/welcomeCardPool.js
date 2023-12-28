@@ -30,35 +30,35 @@ export default async function WelcomeCardPool({ requestId, isRequester, isReques
         let isAcceptWelcomeOk = true;
 
         Promise.all([
-        fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res.json())
-            .then((response) => {
-                if (response?.pageNum) {
-                    setMaxPage(response.pageNum);
-                    setWelcomes(response.data);
-                    isWelcomeOk = true;
-                }
-            }),
-        fetch(`${config.serverIp}/offers?page=${page}&page_size=1&seeker_id=${requestId}&status_list=Accepted`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res.json())
-            .then((response) => {
-                if (response?.pageNum) {
-                    setAcceptWelcomes(response.data);
-                    isAcceptWelcomeOk = true;
-                }
-            })
+            fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then((res) => res.json())
+                .then((response) => {
+                    if (response?.pageNum) {
+                        setMaxPage(response.pageNum);
+                        setWelcomes(response.data);
+                        isWelcomeOk = true;
+                    }
+                }),
+            fetch(`${config.serverIp}/offers?page=${page}&page_size=1&seeker_id=${requestId}&status_list=Accepted`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then((res) => res.json())
+                .then((response) => {
+                    if (response?.pageNum) {
+                        setAcceptWelcomes(response.data);
+                        isAcceptWelcomeOk = true;
+                    }
+                })
         ]).then(() => {
-        if (isWelcomeOk && isAcceptWelcomeOk) {
-            setIsLoading(false);
-        }
+            if (isWelcomeOk && isAcceptWelcomeOk) {
+                setIsLoading(false);
+            }
         });
     }, [page, requestId])
 
