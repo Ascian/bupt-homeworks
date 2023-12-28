@@ -19,10 +19,17 @@ import WelcomeCard from "./welcomeCard";
 
 export default async function WelcomeCardPool({ requestId, isRequester, isRequestActive }) {
     const [page, setPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(0);
+    const [welcomes, setWelcomes] = useState([]);
+    const [acceptWelcomes, setAcceptWelcomes] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
 
     useEffect(() => {
         let isWelcomeOk = true;
         let isAcceptWelcomeOk = true;
+
+        Promise.all([
         fetch(`${config.serverIp}/offers?page=${page}&page_size=10&seeker_id=${requestId}&status_list=Active`, {
             method: 'GET',
             headers: {
@@ -35,7 +42,7 @@ export default async function WelcomeCardPool({ requestId, isRequester, isReques
                     setWelcomes(response.data);
                     isWelcomeOk = true;
                 }
-            });
+            }),
         fetch(`${config.serverIp}/offers?page=${page}&page_size=1&seeker_id=${requestId}&status_list=Accepted`, {
             method: 'GET',
             headers: {
@@ -47,10 +54,12 @@ export default async function WelcomeCardPool({ requestId, isRequester, isReques
                     setAcceptWelcomes(response.data);
                     isAcceptWelcomeOk = true;
                 }
-            });
+            })
+        ]).then(() => {
         if (isWelcomeOk && isAcceptWelcomeOk) {
             setIsLoading(false);
         }
+        });
     }, [page, requestId])
 
 

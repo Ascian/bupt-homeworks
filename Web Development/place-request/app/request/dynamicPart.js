@@ -50,7 +50,8 @@ export default async function DynamicPart({ requestId }) {
             let isOfferOk = false;
             let isWelcomeOk = false;
 
-            await fetch(`${config.serverIp}/seekers/${requestId}`, {
+            Promise.all([
+                fetch(`${config.serverIp}/seekers/${requestId}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -58,15 +59,12 @@ export default async function DynamicPart({ requestId }) {
             }).then((res) => res.json())
                 .then((request) => {
                     if (request?.seekerId) {
-                        console.log(request)
                         setRequest(request);
                         isRequestOk = true;
                     }
-                });
+                }),
 
-            if (isRequestOk) {
-                await Promise.all([
-                    fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${request.seekerId}&page=1&page_size=1`, {
+                fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${requestId}&page=1&page_size=1`, {
                         method: 'GET',
                         headers: {
                             "Content-Type": "application/json",
@@ -78,7 +76,7 @@ export default async function DynamicPart({ requestId }) {
                                 isOfferOk = true;
                             }
                         }),
-                    fetch(`${config.serverIp}/offers?seeker_id=${request.seekerId}&page=1&page_size=1`, {
+                fetch(`${config.serverIp}/offers?seeker_id=${requestId}&page=1&page_size=1`, {
                         method: 'GET',
                         headers: {
                             "Content-Type": "application/json",
@@ -89,8 +87,8 @@ export default async function DynamicPart({ requestId }) {
                                 setWelcomes(welcomeResponse.data);
                                 isWelcomeOk = true;
                             }   
-                        })])
-            }
+                        })
+            ]).then(() => {
 
         setIsRequester(session?.user?.id === request.userId);
         setIsOfferer(offers?.length > 0);
@@ -99,9 +97,10 @@ export default async function DynamicPart({ requestId }) {
         if (isRequestOk && isOfferOk && isWelcomeOk) {
             setIsLoading(false);
         }
+            })
         }
-
         fetchData();
+
     }, [session, requestId])
 
     // Fetch welcome to know if the request is replied
