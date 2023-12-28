@@ -60,24 +60,26 @@ export default async function DynamicPart({ requestId }) {
                     .then((request) => {
                         if (request?.seekerId) {
                             setRequest(request);
+                            setIsRequester(session?.user?.id === request.userId);
                             isRequestOk = true;
                         }
                     }),
 
-                fetch(`${config.serverIp}/offers?user_id=${session?.user?.id}&seeker_id=${requestId}&page=1&page_size=1`, {
+                fetch(`${config.serverIp}/offers?user_id=${session?.user.id}&seeker_id=${requestId}&page=1&page_size=1&status_list=Active`, {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
                     },
                 }).then((res) => res.json())
                     .then((offerResponse) => {
-                        if (offerResponse?.data) {
+                        if (offerResponse?.data != null || offerResponse?.data != undefined) {
                             setOffers(offerResponse.data);
+                            setIsOfferer(offers?.length > 0);
                             isOfferOk = true;
                         }
                     }),
 
-                fetch(`${config.serverIp}/offers?seeker_id=${requestId}&page=1&page_size=1`, {
+                fetch(`${config.serverIp}/offers?seeker_id=${requestId}&page=1&page_size=1&status_list=Active`, {
                     method: 'GET',
                     headers: {
                         "Content-Type": "application/json",
@@ -86,14 +88,11 @@ export default async function DynamicPart({ requestId }) {
                     .then((welcomeResponse) => {
                         if (welcomeResponse?.data) {
                             setWelcomes(welcomeResponse.data);
+                            setIsReplied(welcomes?.length > 0);
                             isWelcomeOk = true;
                         }
                     })
             ]).then(() => {
-                setIsRequester(session?.user?.id === request.userId);
-                setIsOfferer(offers?.length > 0);
-                setIsReplied(welcomes?.length > 0);
-
                 if (isRequestOk && isOfferOk && isWelcomeOk) {
                     setIsLoading(false);
                 }
@@ -168,7 +167,8 @@ export default async function DynamicPart({ requestId }) {
         'Expired': '已过期'
     }
 
-    console.log(isDeleteOpen);
+
+    console.log(offers);
     return (
         <>
             {

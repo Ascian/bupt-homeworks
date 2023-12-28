@@ -144,7 +144,7 @@ export default function WelcomeCard({ welcome, isRequester, isRequestActive, isW
                                                 </AlertDialogContent>
                                             </AlertDialogOverlay>
                                         </AlertDialog>
-                                        <Button colorScheme='red' onCLick={onDeclineOpen}>
+                                        <Button colorScheme='red' onClick={onDeclineOpen}>
                                             拒绝
                                         </Button>
                                         <AlertDialog
