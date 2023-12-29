@@ -130,7 +130,7 @@ export default function UserDropdown() {
                         _hover={{ bg: 'gray.100' }}
                         textAlign="left"
                         justifyContent="flex-start"
-                        onClick={() => signOut()}
+                        onClick={() => signOut({ redirect: false })}
                     >
                         登出
                     </Button>

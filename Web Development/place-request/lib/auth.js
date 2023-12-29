@@ -76,6 +76,9 @@ export const authOptions = {
         },
     },
     secret: 'g1eWYZizPT3lsFO6TLeP9ydQ0LrlrNWCwXfedtOfQYc=',
+    pages: {
+        signOut: '/',
+    },
 }
 
 export function auth(...args) {
