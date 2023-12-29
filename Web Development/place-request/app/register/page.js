@@ -132,6 +132,16 @@ export default function Page() {
             setIsConfirmPasswordInvalid(true);
             return;
         }
+        if (identityType === '') {
+            toast({
+                title: '证件类型不合法',
+                description: "证件类型不能为空",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            return;
+        }
         if (identityNumber === '' || identityNumber.length > 20) {
             toast({
                 title: '证件号不合法',
