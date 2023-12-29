@@ -95,7 +95,7 @@ export default function WelcomeCard({ welcome, showButton, isWelcomeAccepted }) 
                 <CardBody>
                     <Flex w='700px' >
                         {isAdmin ? (
-                        <Link href={`/manager/user?user_id=${welcome.userId}`} style={{ textDecoration: 'none' }}>
+                            <Link href={`/manager/users/user?user_id=${welcome.userId}`} style={{ textDecoration: 'none' }}>
                         <Image borderRadius="full" boxSize="40px" src="/userIcon.png" alt="User Icon" />
                         </Link>
                         ) : (
@@ -105,7 +105,7 @@ export default function WelcomeCard({ welcome, showButton, isWelcomeAccepted }) 
                         <Flex w='600px' justify='flex-start' align='center' >
                             <Stack >
                                 {isAdmin ? (
-                                    <Link href={`/manager/user?user_id=${welcome.userId}`} style={{ textDecoration: 'none' }}>
+                                    <Link href={`/manager/users/user?user_id=${welcome.userId}`} style={{ textDecoration: 'none' }}>
                                 <Heading fontSize='md' >{welcome.username}</Heading>
                                     </Link>
                                 ) : (

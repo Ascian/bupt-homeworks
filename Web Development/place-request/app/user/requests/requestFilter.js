@@ -71,7 +71,7 @@ export default function RequestFilter({ isSubmit, setIsSubmit }) {
                 <MenuList maxHeight="300px" overflowY="auto">
                     <MenuItem onClick={() => setDestinationType(undefined)}>全部</MenuItem>
                     {config.destinationTypes.map((type) => (
-                        <MenuItem onClick={() => setDestinationType(type)}>{type}</MenuItem>
+                        <MenuItem onClick={() => setDestinationType(type)} key={type}>{type}</MenuItem>
                     ))}
                 </MenuList>
             </Menu>
@@ -87,7 +87,7 @@ export default function RequestFilter({ isSubmit, setIsSubmit }) {
                 <MenuList maxHeight="300px" overflowY="auto">
                     <MenuItem onClick={() => setStatusType(undefined)}>全部</MenuItem>
                     {statusTypes.map((type) => (
-                        <MenuItem onClick={() => setStatusType(type)}>{type}</MenuItem>
+                        <MenuItem onClick={() => setStatusType(type)} key={type}>{type}</MenuItem>
                     ))}
                 </MenuList>
             </Menu>

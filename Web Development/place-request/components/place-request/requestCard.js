@@ -22,7 +22,7 @@ export default function RequestCard({ request, isAdmin }) {
                     <Flex justify="flex-start" align='center' w='600px' >
                         <Flex justify="flex-start" align='center' w='600px' >
                             {isAdmin ? (
-                            <Link href={`/manager/user?user_id=${request.userId}`} style={{ textDecoration: 'none' }}>
+                                <Link href={`/manager/users/user?user_id=${request.userId}`} style={{ textDecoration: 'none' }}>
                             <Image borderRadius="full" boxSize="50px" src="/userIcon.png" alt="User Icon" />
                             </Link>
                             ) : (
@@ -30,7 +30,7 @@ export default function RequestCard({ request, isAdmin }) {
                             )}
                             <Box w="4" />
                             {isAdmin ? (
-                                <Link href={`/manager/user?user_id=${request.userId}`} style={{ textDecoration: 'none' }}>
+                                <Link href={`/manager/users/user?user_id=${request.userId}`} style={{ textDecoration: 'none' }}>
                                     <Text fontSize='30px' >{request.username}</Text>
                                 </Link>
                             ) : (

@@ -93,7 +93,7 @@ export default function RequestCardPreviewPool() {
                     {
                         requests.map((request) => (
                             <>
-                                <RequestCardPreview request={request} />
+                                <RequestCardPreview request={request} key={request.seekerId} />
                                 <Box h='2' />
                             </>
                         ))

@@ -50,7 +50,7 @@ export default function HomeFilter({ isSubmit, setIsSubmit }) {
                 <MenuList maxHeight="300px" overflowY="auto">
                     <MenuItem onClick={() => setDestinationType(undefined)}>全部</MenuItem>
                     {config.destinationTypes.map((type) => (
-                        <MenuItem onClick={() => setDestinationType(type)}>{type}</MenuItem>
+                        <MenuItem onClick={() => setDestinationType(type)} key={type}>{type}</MenuItem>
                     ))}
                 </MenuList>
             </Menu>

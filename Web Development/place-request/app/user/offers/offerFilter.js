@@ -65,7 +65,7 @@ export default function OfferFilter({ isSubmit, setIsSubmit }) {
                 <MenuList maxHeight="300px" overflowY="auto">
                     <MenuItem onClick={() => setStatusType(undefined)}>全部</MenuItem>
                     {statusTypes.map((type) => (
-                        <MenuItem onClick={() => setStatusType(type)}>{type}</MenuItem>
+                        <MenuItem onClick={() => setStatusType(type)} key={type}>{type}</MenuItem>
                     ))}
                 </MenuList>
             </Menu>

@@ -109,7 +109,7 @@ export default function WelcomeCardPreviewPool() {
                     {
                         welcomes.map((welcome) => (
                             <>
-                                <WelcomeCardPreview welcome={welcome} />
+                                <WelcomeCardPreview welcome={welcome} key={welcome.offerId} />
                                 <Box h='2' />
                             </>
                         ))

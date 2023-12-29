@@ -247,12 +247,12 @@ export default function PageComponent() {
                                                     {offers.map((welcome) => (
                                                         <>
                                                             {welcome.status === 'Active' ? (
-                                                                <ModifyWelcome welcome={welcome} />
+                                                                <ModifyWelcome welcome={welcome} key={welcome.offerId} />
                                                             ) : (
                                                                 <>
-                                                                    <WelcomeCard welcome={welcome} />
+                                                                        <WelcomeCard welcome={welcome} key={welcome.offerId} />
                                                                     <Box h='2' />
-                                                                    <Card align='left' w='750px'>
+                                                                        <Card align='left' w='750px' key={welcome.offerId}>
                                                                         <Alert status={statusAlert[welcome.status]}>
                                                                             <AlertIcon />
                                                                             <AlertTitle>该回复{status[welcome.status]}</AlertTitle>

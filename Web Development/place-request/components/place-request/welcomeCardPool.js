@@ -93,13 +93,13 @@ export default function WelcomeCardPool({ requestId, showButton }) {
                             <>
                                 {acceptWelcomes.map((welcome) => (
                                     <>
-                                        <WelcomeCard welcome={welcome} showButton={false} isWelcomeAccepted={true} />
+                                        <WelcomeCard welcome={welcome} showButton={false} isWelcomeAccepted={true} key={welcome.offerId} />
                                         <Divider orientation='horizontal' w='750px' />
                                     </>
                                 ))}
                                 {welcomes.map((welcome) => (
                                     <>
-                                        <WelcomeCard welcome={welcome} showButton={showButton} isWelcomeAccepted={false} />
+                                        <WelcomeCard welcome={welcome} showButton={showButton} isWelcomeAccepted={false} key={welcome.offerId} />
                             <Divider orientation='horizontal' w='750px' />
                         </>
                     ))}

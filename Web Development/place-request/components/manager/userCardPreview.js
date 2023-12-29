@@ -14,7 +14,7 @@ import UserIcon from "../shared/userIcon";
 export default function UserCardPreview({ user }) {
 
     return (
-        <Link href={`/manager/user?user_id=${user.id}`}
+        <Link href={`/manager/users/user?user_id=${user.id}`}
             style={{
                 textDecoration: 'none'
             }} >

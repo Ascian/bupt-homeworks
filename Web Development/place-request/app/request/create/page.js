@@ -170,7 +170,7 @@ export default function Page() {
                                 </MenuButton>
                                 <MenuList maxHeight="200px" overflowY="auto">
                                     {config.destinationTypes.map((type) => (
-                                        <MenuItem onClick={() => setDestinationType(type)}>{type}</MenuItem>
+                                        <MenuItem onClick={() => setDestinationType(type)} key={type}>{type}</MenuItem>
                                     ))}
                                 </MenuList>
                             </Menu>

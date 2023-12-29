@@ -16,7 +16,7 @@ export default function LargeRequestCardPreviewPool({ requests }) {
                 <Box h='20' />
             </GridItem>
             {requests.map((request) => (
-                <GridItem rowSpan={5} colSpan={1} p='4'>
+                <GridItem key={request.seekerId} rowSpan={5} colSpan={1} p='4'>
                     <LargeRequestCardPreview request={request} />
                 </GridItem>
             ))}

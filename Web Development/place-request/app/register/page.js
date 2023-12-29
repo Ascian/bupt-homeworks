@@ -300,7 +300,7 @@ export default function Page() {
                             </MenuButton>
                             <MenuList>
                                 {config.identityTypes.map((type) => (
-                                    <MenuItem onClick={() => setIdentityType(type)}>{type}</MenuItem>
+                                    <MenuItem onClick={() => setIdentityType(type)} key={type}>{type}</MenuItem>
                                 ))}
                             </MenuList>
                         </Menu>

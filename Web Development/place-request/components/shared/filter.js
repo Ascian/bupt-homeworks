@@ -20,7 +20,7 @@ export default function Filter({ children, setIsSubmit }) {
                     {children}
                 </CardBody>
                 <CardFooter>
-                    <Button colorScheme='telegram' size='md' onClick={() => handleSubmit()}>筛选</Button>
+                    <Button colorScheme='telegram' size='md' onClick={() => handleSubmit()}>查找</Button>
                 </CardFooter>
             </Card >
 
