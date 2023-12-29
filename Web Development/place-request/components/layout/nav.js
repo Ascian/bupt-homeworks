@@ -14,6 +14,8 @@ export default function Nav() {
     const { SignInModal, setShowSignInModal } = useSignInModal();
     const { data: session } = useSession();
 
+    const isAdmin = session?.user?.userType == 'Admin';
+
     return (
         <>
             <div
@@ -31,11 +33,15 @@ export default function Nav() {
                     <Suspense fallback={<></>}>
                     {session ? (
                         <Flex justify='flex-end' gap='10' >
+                                {isAdmin ? (
+                                    <></>
+                                ) : (
                                 <Link href="/request/create">
                                     <IconButton p={0}
                                 bg="transparent"
                                 icon={<PlusSquareIcon w='30px' h='30px' />} />
                                 </Link>
+                                )}
                             <UserDropdown />
                         </Flex>
                     ) : (

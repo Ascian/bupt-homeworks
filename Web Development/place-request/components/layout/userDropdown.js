@@ -18,6 +18,7 @@ import { useSession, signOut } from 'next-auth/react'
 
 export default function UserDropdown() {
     const { data: session } = useSession();
+    const isAdmin = session?.user?.userType == 'Admin';
 
     return (
         <Popover placement="bottom-end">
@@ -58,34 +59,69 @@ export default function UserDropdown() {
                             </Stack>
                         </Button>
                     </Link>
-                    <Link href={`/user/requests`}>
-                    <Button
-                        w="full"
-                        p={0}
-                        bg="transparent"
-                        borderRadius="md"
-                        mb={0}
-                        _hover={{ bg: 'gray.100' }}
-                        textAlign="left"
-                        justifyContent="flex-start"
-                    >
-                        我请求的
-                    </Button>
-                    </Link>
-                    <Link href={`/user/offers`}>
-                    <Button
-                        w="full"
-                        p={0}
-                        bg="transparent"
-                        borderRadius="md"
-                        mb={0}
-                        _hover={{ bg: 'gray.100' }}
-                        textAlign="left"
-                        justifyContent="flex-start"
-                    >
-                        我回复的
-                    </Button>
-                    </Link>
+                    {isAdmin ? (
+                        <>
+                            <Link href={`/manager`}>
+                                <Button
+                                    w="full"
+                                    p={0}
+                                    bg="transparent"
+                                    borderRadius="md"
+                                    mb={0}
+                                    _hover={{ bg: 'gray.100' }}
+                                    textAlign="left"
+                                    justifyContent="flex-start"
+                                >
+                                    统计信息
+                                </Button>
+                            </Link>
+                            <Link href={`/manager/users`}>
+                                <Button
+                                    w="full"
+                                    p={0}
+                                    bg="transparent"
+                                    borderRadius="md"
+                                    mb={0}
+                                    _hover={{ bg: 'gray.100' }}
+                                    textAlign="left"
+                                    justifyContent="flex-start"
+                                >
+                                    用户信息
+                                </Button>
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                                <Link href={`/user/requests`}>
+                                    <Button
+                                        w="full"
+                                        p={0}
+                                        bg="transparent"
+                                        borderRadius="md"
+                                        mb={0}
+                                        _hover={{ bg: 'gray.100' }}
+                                        textAlign="left"
+                                        justifyContent="flex-start"
+                                    >
+                                        我请求的
+                                    </Button>
+                                </Link>
+                                <Link href={`/user/offers`}>
+                                    <Button
+                                        w="full"
+                                        p={0}
+                                        bg="transparent"
+                                        borderRadius="md"
+                                        mb={0}
+                                        _hover={{ bg: 'gray.100' }}
+                                        textAlign="left"
+                                        justifyContent="flex-start"
+                                    >
+                                        我回复的
+                                    </Button>
+                                </Link>
+                        </>
+                    )}
                     <Button
                         w="full"
                         p={0}

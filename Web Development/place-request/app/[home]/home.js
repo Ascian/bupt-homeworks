@@ -29,13 +29,15 @@ export default async function Home() {
 
     const searchParams = useSearchParams()
 
+    const isAdmin = session?.user.userType == 'Admin';
+
 
     useEffect(() => {
         let isFetched = false;
 
         if (status != 'loading' && !isFetched) {
 
-            fetch(`${config.serverIp}/seekers?page_size=10${session ? `&user_region=${session.user.city}` : ''}&status_list=Active&${searchParams}`, {
+            fetch(`${config.serverIp}/seekers?page_size=10${session && !isAdmin ? `&user_region=${session.user.city}` : ''}&status_list=Active&${searchParams}`, {
                 method: 'GET',
             }).then((res) => res.json())
                 .then((response) => {
