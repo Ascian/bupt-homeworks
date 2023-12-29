@@ -105,7 +105,7 @@ export default function Page() {
         const res = await fetch(`${config.serverIp}/users/me`, {
             method: 'PATCH',
             body: JSON.stringify({
-                riginPassword: originPassword,
+                originPassword: originPassword,
                 password: password,
             }),
             headers: {
