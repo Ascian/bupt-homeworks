@@ -50,8 +50,6 @@ export default function ModifyRequest() {
     const [isMaxExpectedPriceInvalid, setIsMaxExpectedPriceInvalid] = useState(false);
     const [isSeekerExpiryDateInvalid, setIsSeekerExpiryDateInvalid] = useState(false);
 
-    const requestSeekerExpiryDate = new Date(request?.seekerExpiryDate).toISOString().split('T')[0];
-
     useEffect(() => {
         fetch(`${config.serverIp}/seekers/${requestId}`, {
             method: 'GET',
@@ -225,7 +223,6 @@ export default function ModifyRequest() {
                             <Box h='4' />
                             <Text>请求截止日期</Text>
                             <Input
-                                placeholder={requestSeekerExpiryDate}
                                 value={seekerExpiryDate}
                                 onChange={(e) => setSeekerExpiryDate(e.target.value)}
                                 errorBorderColor='crimson'

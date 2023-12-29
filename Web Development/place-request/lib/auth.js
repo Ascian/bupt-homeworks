@@ -74,7 +74,8 @@ export const authOptions = {
             session.user = token.user;
             return session;
         },
-    }
+    },
+    secret: 'g1eWYZizPT3lsFO6TLeP9ydQ0LrlrNWCwXfedtOfQYc=',
 }
 
 export function auth(...args) {
