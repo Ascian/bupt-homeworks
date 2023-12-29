@@ -13,6 +13,10 @@ import {
     Input,
     Textarea,
     Spinner,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+
 
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -46,10 +50,12 @@ export default function UserCard() {
         let isFetched = false;
 
         if (status != 'loading' && !isFetched) {
-            fetch(`${config.serverIp}/users/${userId}`, {
+            if (session && session.user.userType == 'Admin') {
+                fetch(`${config.serverIp}/admin/users/${userId}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${session.accessToken}`
+                    'Authorization': `Bearer ${session.accessToken
+                        }`
                 },
             }).then((res) => res.json())
                 .then((user) => {
@@ -59,6 +65,11 @@ export default function UserCard() {
                         isFetched = true;
                     }
                 })
+            }
+            else {
+                setIsLoading(false);
+                isFetched = true;
+            }
         }
     }, [status, userId])
 
@@ -74,7 +85,15 @@ export default function UserCard() {
         </>);
     }
 
+    const identityTypes = {
+        'IdCard': '居民身份证',
+        'Passport': '护照',
+    }
+
     return (
+        <>
+            {
+                session && session.user.userType == 'Admin' ? (
         <Card align='center'>
             <CardHeader>
                 <Flex align='center'>
@@ -102,11 +121,11 @@ export default function UserCard() {
                     </GridItem>
                     <GridItem rowSpan={1} colSpan={3} p='4'>
                         <Text>证件类型</Text>
-                        <Input variant='filled' isReadOnly='true' value={user.identityType} />
+                                    <Input variant='filled' isReadOnly='true' value={identityTypes[user.documentType]} />
                     </GridItem>
                     <GridItem rowSpan={1} colSpan={3} p='4'>
                         <Text>证件号</Text>
-                        <Input variant='filled' isReadOnly='true' value={user.identityNumber} />
+                                    <Input variant='filled' isReadOnly='true' value={user.documentNumber} />
                     </GridItem>
                     <GridItem rowSpan={1} colSpan={3} p='4'>
                         <Text>电话号码</Text>
@@ -121,19 +140,30 @@ export default function UserCard() {
                     </GridItem>
                     <GridItem rowSpan={1} colSpan={2} p='4'>
                         <Text>省份</Text>
-                        <Input variant='filled' isReadOnly='true' value={user.province} />
+                                    <Input variant='filled' isReadOnly='true' value={user.district} />
                     </GridItem>
                     <GridItem rowSpan={1} colSpan={2} p='4'>
                         <Text>市</Text>
-                        <Input variant='filled' isReadOnly='true' value={user.city} />
+                                    <Input variant='filled' isReadOnly='true' value={user.region} />
                     </GridItem>
                     <GridItem rowSpan={3} colSpan={6} p='4'>
                         <Text>个人简介</Text>
-                        <Textarea variant='filled' isReadOnly='true' value={user.description}
+                                    <Textarea variant='filled' isReadOnly='true' value={user.bio}
                         />
                     </GridItem>
                 </Grid>
             </CardBody>
         </Card >
+                ) : (
+                    <>
+                        <Card>
+                            <Alert status='error'>
+                                <AlertIcon />
+                                <AlertTitle>管理员界面</AlertTitle>
+                            </Alert >
+                        </Card >
+                    </>
+                )}
+        </>
     );
 }

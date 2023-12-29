@@ -47,6 +47,7 @@ export default function PageComponent() {
     const [isLoading, setIsLoading] = useState(true);
 
     const isRequester = session?.user?.id === request.userId;
+    const isAdmin = session?.user?.userType === 'Admin';
     const isOfferer = offers?.length > 0;
     const isReplied = welcomes?.length > 0;
 
@@ -172,7 +173,7 @@ export default function PageComponent() {
 
     return (
         <>
-            <RequestCard request={request} />
+            <RequestCard request={request} isAdmin={isAdmin} />
 
             <Box h='10' />
             {
@@ -266,7 +267,7 @@ export default function PageComponent() {
                                             </Card >
                                         ) : (
                                             <>
-                                                {request.status === 'Active' ? (
+                                                        {request.status === 'Active' && !isAdmin ? (
                                                     <CreateWelcome requestId={requestId} />
                                                 ) : (
                                                     <></>
@@ -280,7 +281,7 @@ export default function PageComponent() {
                     </>
                 ) : (
                     <>
-                        {request.status === 'Active' ? (
+                            {request.status === 'Active' && !isAdmin ? (
                             <Card align='left' w='800px'>
                                 <Alert status='error'>
                                     <AlertIcon />

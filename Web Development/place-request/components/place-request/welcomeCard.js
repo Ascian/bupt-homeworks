@@ -32,6 +32,7 @@ export default function WelcomeCard({ welcome, showButton, isWelcomeAccepted }) 
     const { isOpen: isDeclineOpen, onOpen: onDeclineOpen, onClose: onDeclineClose } = useDisclosure()
     const cancelRef = useRef();
     const { data: session } = useSession();
+    const isAdmin = session?.user?.userType == 'Admin';
 
     const toast = useToast()
     const handleAccept = async () => {
@@ -93,13 +94,23 @@ export default function WelcomeCard({ welcome, showButton, isWelcomeAccepted }) 
             <Card align='center' w='750px' h='auto' bg="transparent" boxShadow="none">
                 <CardBody>
                     <Flex w='700px' >
+                        {isAdmin ? (
                         <Link href={`/manager/user?user_id=${welcome.userId}`} style={{ textDecoration: 'none' }}>
                         <Image borderRadius="full" boxSize="40px" src="/userIcon.png" alt="User Icon" />
                         </Link>
+                        ) : (
+                            <Image borderRadius="full" boxSize="40px" src="/userIcon.png" alt="User Icon" />
+                        )}
                         <Box w="4" />
                         <Flex w='600px' justify='flex-start' align='center' >
                             <Stack >
+                                {isAdmin ? (
+                                    <Link href={`/manager/user?user_id=${welcome.userId}`} style={{ textDecoration: 'none' }}>
                                 <Heading fontSize='md' >{welcome.username}</Heading>
+                                    </Link>
+                                ) : (
+                                    <Heading fontSize='md' >{welcome.username}</Heading>
+                                )}
                                 <Text fontSize='md' >{welcome.offerDescription}</Text>
                                 <Text fontSize='sm' color='grey' >{date}</Text>
                             </Stack>
