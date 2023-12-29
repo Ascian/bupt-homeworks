@@ -93,7 +93,7 @@ export default function Page() {
         if (password !== confirmPassword) {
             toast({
                 title: '密码不一致',
-                description: "请确认两次输入的密码一致",
+                description: "两次输入密码一致",
                 status: 'error',
                 duration: 9000,
                 isClosable: true,

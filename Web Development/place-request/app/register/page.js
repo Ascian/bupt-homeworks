@@ -101,7 +101,7 @@ export default function Page() {
         if (password.toUpperCase() === password || password.toLowerCase() === password) {
             toast({
                 title: '密码不合法',
-                description: "密码不能只包含大写或小写字母",
+                description: "密码应包含大小写字母",
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -124,7 +124,7 @@ export default function Page() {
         if (password !== confirmPassword) {
             toast({
                 title: '密码不一致',
-                description: "请确认两次输入的密码一致",
+                description: "两次输入密码一致",
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
