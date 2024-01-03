@@ -130,7 +130,7 @@ export default function Page() {
         else {
             toast({
                 title: '修改失败',
-                description: `state: ${res.status}, message: ${user.message}`,
+                description: `${user.errorMessage}`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,

@@ -18,7 +18,8 @@ export default function RequestCard({ request, isAdmin }) {
         <>
             <Card align='center' w='800px' h='auto'>
                 <CardBody>
-                    <Image w='600px' src="/picture.png" alt="picture" />
+                    <Image w='600px' src={request.attachmentUrl ? request.attachmentUrl : '/picture.png'} alt="picture" />
+                    <Box h='4' />
                     <Flex justify="flex-start" align='center' w='600px' >
                         <Flex justify="flex-start" align='center' w='600px' >
                             {isAdmin ? (
@@ -50,6 +51,7 @@ export default function RequestCard({ request, isAdmin }) {
                     <Flex justify="flex-end" align='center' w='600px' >
                         <Heading fontSize='20px' >最高单价：￥{request.maxExpectedPrice}</Heading>
                     </Flex>
+
 
                 </CardBody>
 

@@ -53,7 +53,7 @@ export default function WelcomeCard({ welcome, showButton, isWelcomeAccepted }) 
             const response = await res.json()
             toast({
                 title: '接受失败',
-                description: response.message,
+                description: response.errorMessage,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -80,7 +80,7 @@ export default function WelcomeCard({ welcome, showButton, isWelcomeAccepted }) 
             const response = await res.json()
             toast({
                 title: '拒绝失败',
-                description: response.message,
+                description: response.errorMessage,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,

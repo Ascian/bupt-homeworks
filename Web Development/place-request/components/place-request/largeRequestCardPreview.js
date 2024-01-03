@@ -23,7 +23,7 @@ export default function LargeRequestCardPreview({ request }) {
             }}>
             <Card w='300px' h='auto' overflow="hidden">
                 <CardBody>
-                    <Image width='full' src="/picture.png" alt="picture" />
+                    <Image width='full' src={request.attachmentUrl ? request.attachmentUrl : '/picture.png'} alt="picture" />
                     <Heading size='lg' maxW='250px' noOfLines={[1]}>{request.seekerTitle}</Heading>
                     <Box h='2' />
                     <Text fontSize='sm' color='grey' >{`${updateTime}    ${request.userRegion}`}</Text>

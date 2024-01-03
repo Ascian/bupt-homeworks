@@ -24,7 +24,7 @@ import {
     Spinner,
 
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useToast } from '@chakra-ui/toast';
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { useSession } from 'next-auth/react';
@@ -35,6 +35,7 @@ export default function ModifyRequest() {
     const { data: session } = useSession();
     const searchParams = useSearchParams();
     const requestId = searchParams.get('request_id');
+    const hiddenFileInput = useRef(null);
     const [request, setRequest] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const toast = useToast()
@@ -44,11 +45,14 @@ export default function ModifyRequest() {
     const [destinationType, setDestinationType] = useState('')
     const [maxExpectedPrice, setMaxExpectedPrice] = useState(0);
     const [seekerExpiryDate, setSeekerExpiryDate] = useState('');
+    const [pictureLoc, setPictureLoc] = useState(null)
 
     const [isTitleInvalid, setIsTitleInvalid] = useState(false);
     const [isDescriptionInvalid, setIsDescriptionInvalid] = useState(false);
     const [isMaxExpectedPriceInvalid, setIsMaxExpectedPriceInvalid] = useState(false);
     const [isSeekerExpiryDateInvalid, setIsSeekerExpiryDateInvalid] = useState(false);
+
+
 
     useEffect(() => {
         fetch(`${config.serverIp}/seekers/${requestId}`, {
@@ -76,6 +80,15 @@ export default function ModifyRequest() {
             />
         </>);
     }
+
+    const handlePictureSubmit = event => {
+        hiddenFileInput.current.click();
+    };
+
+    const handleChange = event => {
+        const fileUploaded = event.target.files[0];
+        setPictureLoc(fileUploaded);
+    };
 
     const handleSubmit = async () => {
         if (title === '' || title.length > 20) {
@@ -123,6 +136,47 @@ export default function ModifyRequest() {
             return;
         }
 
+        if (!pictureLoc) {
+            toast({
+                title: '图片不合法',
+                description: "图片不能为空",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            return;
+        }
+
+        const validImageTypes = ['image/jpeg', 'image/png'];
+        if (!validImageTypes.includes(pictureLoc.type)) {
+            toast({
+                title: '图片不合法',
+                description: "图片格式必须为jpg或png",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', pictureLoc);
+        const pictureRes = await fetch(`${config.serverIp}/files/upload`, {
+            method: 'POST',
+            body: formData,
+        })
+        const url = await pictureRes.text();
+        if (!pictureRes.ok || !url) {
+            toast({
+                title: '图片上传失败',
+                description: `${url.errorMessage}`,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            return;
+        }
+
         const dateObject = new Date(seekerExpiryDate);
         const date = dateObject.toISOString();
 
@@ -134,6 +188,7 @@ export default function ModifyRequest() {
                 destinationType: destinationType,
                 maxExpectedPrice: parseInt(maxExpectedPrice, 10),
                 seekerExpiryDate: date,
+                attachmentUrl: url,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -143,8 +198,8 @@ export default function ModifyRequest() {
         const request = await res.json()
         if (!res.ok || !request) {
             toast({
-                title: '创建失败',
-                description: `state: ${res.status}, message: ${request.message}`,
+                title: '修改失败',
+                description: `${request.errorMessage}`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -153,7 +208,7 @@ export default function ModifyRequest() {
         }
         else {
             toast({
-                title: '创建成功',
+                title: '修改成功',
                 description: '即将跳转至请求页面',
                 status: 'success',
                 duration: 9000,
@@ -229,6 +284,19 @@ export default function ModifyRequest() {
                                 isInvalid={isSeekerExpiryDateInvalid}
                                 type="date"
                             />
+                            <Box h='4' />
+                            <Text>展示图片</Text>
+                            <Flex alignItems="center">
+                                <Button colorScheme='facebook' size='md' onClick={handlePictureSubmit}>选择文件</Button>
+                                <input
+                                    type="file"
+                                    ref={hiddenFileInput}
+                                    onChange={handleChange}
+                                    style={{ display: 'none' }}
+                                />
+                                <Box w='4' />
+                                <Text>{pictureLoc ? pictureLoc.name : '未选择文件'}</Text>
+                            </Flex>
                         </CardBody>
                         <CardFooter>
                             <Button colorScheme='telegram' size='lg' onClick={() => handleSubmit()} >提交</Button>

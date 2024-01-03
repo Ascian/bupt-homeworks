@@ -60,7 +60,7 @@ export default function CreateWelcome({ requestId }) {
             const response = await res.json()
             toast({
                 title: '提交失败',
-                description: `state: ${res.status}, message: ${response.message}`,
+                description: `${response.errorMessage}`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,

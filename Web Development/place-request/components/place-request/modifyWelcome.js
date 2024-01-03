@@ -72,7 +72,7 @@ export default function ModifyWelcome({ welcome }) {
             const response = await res.json()
             toast({
                 title: '修改失败',
-                description: `state: ${res.status}, message: ${response.message}`,
+                description: `${response.errorMessage}`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -106,7 +106,7 @@ export default function ModifyWelcome({ welcome }) {
             const response = await res.json()
             toast({
                 title: '删除失败',
-                description: `state: ${res.status}, message: ${response.message}`,
+                description: `${response.errorMessage}`,
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
